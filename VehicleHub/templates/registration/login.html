@@ -15,12 +15,19 @@
 
 <center style="margin-top: 100px"> <img src="{% static 'images/logo1.jpg' %}" alt="logo-image" height="120" ><br><br><center>
 
-<form style="margin-top: 20px; width: 500px;" action="" method="post">
-{% csrf_token %}
-{{form.as_p}}
+    <form style="margin-top: 20px; width: 500px;" action="" method="post">
+        {% csrf_token %}
+        <label for="id_email">email:</label>
+        <input type="email" name="email" id="id_email" required>
+        <br><br>
+        <label for="id_password">password:</label>
+        <input type="password" name="password" id="id_password" required>
+        <br><br>
+        <button class="submit-button" type="submit">LOG IN</button>
+    </form>
+    
 
-<button class= "submit-button" type="submit">LOG IN</button> 
-</form>
+<p class="text-center">Don't have an account? Create one <a href="{% url 'register' %}">here</a></p> </center>
 
 
 </html>
