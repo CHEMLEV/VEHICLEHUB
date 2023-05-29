@@ -20,9 +20,13 @@
         </div>
         <div class="base-text">
             <h5>
+                {% if user.is_authenticated %}
                 Hi, {{user.first_name}} <br>
-                 Your access level: {{user.groups.first.name}} <br>
-                 <a href="{% url 'logout' %}">LOG OUT</a>
+                {% endif %}
+                {% if user.organisation_id > 0 %}
+                Your access level: {{user.organisation_id}} <br>
+                {% endif %}
+                <a href="{% url 'logout' %}">LOG OUT</a>
             </h5>
         </div>
       </div>    

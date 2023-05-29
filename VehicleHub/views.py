@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
 from django import forms
-from django.contrib.auth import login
 from .forms import RegisterForm
+from django.urls import reverse
+from django.contrib.auth import authenticate, login
 
 
 class EmailUserCreationForm(UserCreationForm):
@@ -17,13 +17,33 @@ def register_view(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
+            user.username = form.cleaned_data['email']
+            user.save()
             login(request, user)
-            return redirect('join')
+            return redirect(reverse('join'))
     else:
         form = RegisterForm()
 
     return render(request, 'registration/register.html', {'form': form})
+
+
+
+def login_view(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        user = authenticate(request, username=email, password=password)
+        
+        if user is not None:
+            login(request, user)
+            return redirect(reverse('join'))
+        else:
+            # Invalid credentials, handle the error as needed
+            error_message = 'Invalid email or password.'
+            return render(request, 'registration/login.html', {'error_message': error_message})
+    
+    return render(request, 'registration/login.html')
 
 
 def main_view(request):
