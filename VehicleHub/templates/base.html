@@ -16,20 +16,22 @@
 
     <div class="base-container">
         <div class="base-logo">
-          <a><img src="{% static 'images/logo1.jpg' %}" height="80px"></a>
+          <a href="#"><img src="{% static 'images/logo1.jpg' %}" height="70px"></a>
         </div>
-        <div class="base-text">
-            <h5>
-                {% if user.is_authenticated %}
-                Hi, {{user.first_name}} <br>
-                {% endif %}
-                {% if user.organisation_id > 0 %}
-                Your access level: {{user.organisation_id}} <br>
-                {% endif %}
-                <a href="{% url 'logout' %}">LOG OUT</a>
-            </h5>
+        <div class="base-text-container">
+          <h5 class="base-text">
+            {% if user.is_authenticated %}
+            Hi, {{user.first_name}} <br>
+            {% endif %}
+            {% if user.organisation_id > 0 %}
+            Your access level: {{user.organisation.organisation_type.organisation_type}} 
+            {% endif %}<br><br>
+            <div>
+            <a href="#" onclick="logout()" class="logout_link">LOG OUT</a>
+            </div>
+          </h5>
         </div>
-      </div>    
+      </div>
 
     
     
@@ -37,3 +39,13 @@
 
 </body>
 </html>
+
+<script>
+    function logout() {
+      // Perform the logout process
+      // Example: Use an AJAX request to a logout endpoint or clear session data
+    
+      // Redirect the user to the login page
+      window.location.href = "/login"; // Replace "/login" with the actual URL of your login page
+    }
+</script>
