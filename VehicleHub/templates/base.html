@@ -9,6 +9,11 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <title> VEHICLE HUB </title> 
+    
+      
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      {% block scripts %}{% endblock %}
+  </head>
 </head>
 
 <body>
@@ -27,7 +32,7 @@
             Your access level: {{user.organisation.organisation_type.organisation_type}} 
             {% endif %}<br><br>
             <div>
-            <a href="#" onclick="logout()" class="logout_link">LOG OUT</a>
+            <a href="#" onclick="logout()" class="auth_link">LOG OUT</a>
             </div>
           </h5>
         </div>

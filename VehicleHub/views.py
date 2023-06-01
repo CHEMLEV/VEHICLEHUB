@@ -4,6 +4,10 @@ from django import forms
 from .forms import RegisterForm
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
+from .models import Organisation
+import django_filters
+
+
 
 
 class EmailUserCreationForm(UserCreationForm):
@@ -46,5 +50,9 @@ def login_view(request):
     return render(request, 'registration/login.html')
 
 
-def main_view(request):
-    return render(request, 'join.html')
+
+def join_view(request):
+    organisations = Organisation.objects.all()
+    context = {'organisations': organisations}
+    return render(request, 'join.html', context)
+

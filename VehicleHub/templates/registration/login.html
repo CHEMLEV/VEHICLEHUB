@@ -23,11 +23,18 @@
         <label for="id_password">Password:</label>
         <input type="password" name="password" id="id_password" required>
         <br><br>
-        <button class="auth-button" type="submit">LOG IN</button>
+        <h5 class="base-text">
+          <div class="centered-button">
+            <div class="auth_link">
+              <button type="submit" class="auth-button">LOG IN</button>
+            </div>
+          </div>
+        </h5>
       </form>
+      
     
 
-<p class="text-center">Don't have an account? Create one <a href="{% url 'register' %}">here</a></p> </center>
+<p style="color: black;">Don't have an account? Create one <a href="{% url 'register' %}" style="color: black;">here</a></p> </center>
 
 
 </html>

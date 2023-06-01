@@ -1,22 +1,82 @@
 {% extends "base.html" %}
-{% load static %}
+
 {% block content %}
-
-
-<br><br>
-
-<center><h2>PLEASE SEND A REQUEST AND JOIN AN ORGANISATION TO START USING OUR WEBSITE</h2></center>
-
-    <br><br><br>      
-        
-    </p>
+    <br><br>
+    <center><h2>PLEASE SEND A REQUEST AND JOIN AN ORGANISATION TO START USING OUR WEBSITE</h2></center>
     <br>
     
+    <form action="{% url 'join' %}" method="GET" class="search-form">
+        <div class="search-input-wrapper">
+            <h5 class="base-text">
+                <input type="text" name="query" id="search-input" placeholder="Start typing organisation name or address..." class="search-input">
+                <div class="auth_link">
+                    <button type="submit" class="auth-button">SEARCH</button>
+                </div>
+            </h5>
+        </div>
+    </form>
+    <br>
     
-        <br> <br>  <br> <br> <br> <br>  <br> <br>
+    <center>
+        <div id="search-results" class="result-container" style="display: block; width: 70%; height: 200px; border: 1px solid turquoise;">
+            {% if user.is_authenticated %}
+                {% for organisation in organisations %}
+                    <p class="organisation">{{ organisation.title }} ({{ organisation.address }})</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </center>
+    
+    <script>
+        $(document).ready(function() {
+            // Store all organizations in a variable
+            var allOrganisations = $('.organisation');
+    
+            // Store the original HTML content of the container
+            var originalContent = allOrganisations.clone();
+    
+            // Handle search input change event
+            $('#search-input').on('input', function() {
+                var query = $(this).val().toLowerCase();
+                var resultsContainer = $('#search-results');
+                resultsContainer.empty();
+    
+                // Display all organizations if search input is empty
+                if (query === '') {
+                    resultsContainer.append(originalContent);
+                } else {
+                    // Filter organizations based on search input
+                    var matchedOrganisations = allOrganisations.filter(function() {
+                        var title = $(this).text().split('\n')[0].trim().toLowerCase();
+                        return title.includes(query);
+                    }).clone();
+    
+                    // Show organizations as soon as a match is found
+                    if (matchedOrganisations.length > 0) {
+                        resultsContainer.append(matchedOrganisations);
+                    } else {
+                        resultsContainer.append('<p>No results found.</p>');
+                    }
+                }
+            });
+        });
+    </script>
+    
+
+
+{% endblock %}
+
+    
+    
+        
+    
+    
+    
+    
+    
+    
+    
+    <br><br><br><br><br><br><br><br>
+    <p>
         This is a project created by Alexey, Mei from Whitecliffe NZ for educational purposes only.
     </p>
-
-
-
-{% endblock content %}
