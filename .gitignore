@@ -14,3 +14,7 @@ VehicleHubWebsite/__pycache__/urls.cpython-37.pyc
 VehicleHubWebsite/__pycache__/wsgi.cpython-37.pyc
 
 *.sqlite3
+VehicleHub/migrations/0003_accidentrecord_breachtype_customrecord_financerecord_maintenancetype_numberplate_ownership_policerec.py
+VehicleHub/migrations/0004_auto_20230531_1337.py
+VehicleHub/migrations/__pycache__/0003_accidentrecord_breachtype_customrecord_financerecord_maintenancetype_numberplate_ownership_policerec.cpython-37.pyc
+VehicleHub/migrations/__pycache__/0004_auto_20230531_1337.cpython-37.pyc
