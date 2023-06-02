@@ -30,7 +30,7 @@ class CustomUser(AbstractUser):
 
 class Vehicle(models.Model):
     VIN = models.TextField(max_length=20, null=False)
-    type = models.TextField(max_length=20, null=False)
+    year = models.IntegerField(null=False)
     make = models.TextField(max_length=20, null=False)
     model = models.TextField(max_length=20, null=False)
     fuel = models.TextField(max_length=20, null=False)
