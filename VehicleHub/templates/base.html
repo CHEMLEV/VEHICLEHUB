@@ -21,7 +21,7 @@
 
     <div class="base-container">
         <div class="base-logo">
-          <a href="#"><img src="{% static 'images/logo1.jpg' %}" height="70px"></a>
+          <a href="#"><img src="{% static 'images/logo1.jpg' %}" height="80px"></a>
         </div>
         <div class="base-text-container">
           <h5 class="base-text">
@@ -31,8 +31,8 @@
             {% if user.organisation_id > 0 %}
             Your access level: {{user.organisation.organisation_type.organisation_type}} 
             {% endif %}<br><br>
-            <div>
-            <a href="#" onclick="logout()" class="auth_link">LOG OUT</a>
+            <div class="auth_link">
+            <a href="#" onclick="logout()" >LOG OUT</a>
             </div>
           </h5>
         </div>

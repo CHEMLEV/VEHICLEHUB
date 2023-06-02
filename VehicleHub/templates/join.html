@@ -2,29 +2,26 @@
 
 {% block content %}
     <br><br>
-    <center><h2>PLEASE SEND A REQUEST AND JOIN AN ORGANISATION TO START USING OUR WEBSITE</h2></center>
+    <center><h2>PLEASE FIND AND CLICK ORGANISATION TO SEND JOIN REQUEST</h2></center>
     <br>
-    
-    <form action="{% url 'join' %}" method="GET" class="search-form">
-        <div class="search-input-wrapper">
-            <h5 class="base-text">
-                <input type="text" name="query" id="search-input" placeholder="Start typing organisation name or address..." class="search-input">
-                <div class="auth_link">
-                    <button type="submit" class="auth-button">SEARCH</button>
-                </div>
-            </h5>
-        </div>
-    </form>
-    <br>
-    
-    <center>
-        <div id="search-results" class="result-container" style="display: block; width: 70%; height: 200px; border: 1px solid turquoise;">
+    <div class="search-container">
+  <form action="{% url 'join' %}" method="GET" class="search-form">
+    <div class="search-input-wrapper">
+      <input type="text" name="query" id="search-input" placeholder="Start typing organization name or address..." class="search-input">
+      <div class="auth_link">
+      <button type="submit" class="auth-button">SEARCH</button>
+    </div>
+    </div>
+  </form>
+  <br>
+        <div id="search-results" class="result-container">
             {% if user.is_authenticated %}
                 {% for organisation in organisations %}
                     <p class="organisation">{{ organisation.title }} ({{ organisation.address }})</p>
                 {% endfor %}
             {% endif %}
         </div>
+    </div>
     </center>
     
     <script>
