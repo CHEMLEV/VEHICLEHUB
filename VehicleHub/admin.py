@@ -1,12 +1,12 @@
 from django.contrib import admin
-from .models import CustomUser, Organisation, OrganisationType, Vehicle, CustomRecord, Ownership, NumberPlate, RegistrationRecord, FinanceRecord, BreachType, PoliceRecord, AccidentRecord, PolicyRecord, MaintenanceType, MaintenanceRecord
+from .models import CustomUser, Organisation, OrganisationType, Vehicle, CustomsRecord, Ownership, NumberPlate, RegistrationRecord, FinanceRecord, BreachType, PoliceRecord, AccidentRecord, PolicyRecord, MaintenanceType, MaintenanceRecord
 
 # Register your models here.
 admin.site.register(CustomUser)
 admin.site.register(Organisation)
 admin.site.register(OrganisationType)
 admin.site.register(Vehicle)
-admin.site.register(CustomRecord)
+admin.site.register(CustomsRecord)
 admin.site.register(Ownership)
 admin.site.register(NumberPlate)
 admin.site.register(RegistrationRecord)

@@ -23,6 +23,10 @@
         </div>
     </div>
     </center>
+
+    {% for customsrecord in customsrecords %}
+    <p class="organisation">{{ customsrecord.country_of_origin }} ({{ customsrecord.mileage }})</p>
+{% endfor %}
     
     <script>
         $(document).ready(function() {

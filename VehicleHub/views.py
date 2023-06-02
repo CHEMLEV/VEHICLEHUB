@@ -4,7 +4,7 @@ from django import forms
 from .forms import RegisterForm
 from django.urls import reverse
 from django.contrib.auth import authenticate, login
-from .models import Organisation
+from .models import Organisation, CustomsRecord
 import django_filters
 
 
@@ -53,6 +53,9 @@ def login_view(request):
 
 def join_view(request):
     organisations = Organisation.objects.all()
-    context = {'organisations': organisations}
+    customsrecords = CustomsRecord.objects.all()
+    context = {
+        'organisations': organisations,
+        'customsrecords': customsrecords
+    }
     return render(request, 'join.html', context)
-
