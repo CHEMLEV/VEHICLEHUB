@@ -94,7 +94,7 @@ class FinanceRecord(models.Model):
     record_date = models.DateField(default=datetime.now, null=False)
     mileage = models.IntegerField(null=False)
     expiry_date = models.DateField(default=datetime.now, null=False)
-    detail = models.TextField(max_length=400, blank=True)
+    actual_completion_date = models.DateField(null=True)
     
     def __str__(self):
         return self.id
@@ -106,13 +106,18 @@ class BreachType(models.Model):
     def __str__(self):
         return self.breach_type_title
 
+class PunishmentType(models.Model):
+    punishment_type_title = models.TextField(max_length=500, null=False)
+
+    def __str__(self):
+        return self.punishment_type_title
+
 
 class PoliceRecord(models.Model):
     vehicle_id = models.ForeignKey(Vehicle, on_delete=models.CASCADE, null=True)
     user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
     breach_type_id = models.ForeignKey(BreachType, on_delete=models.CASCADE, null=True)
-    fine = models.IntegerField(null=False)
-    punishment = models.TextField(max_length=100, null=False)
+    punishment_type_id = models.ForeignKey(PunishmentType, on_delete=models.CASCADE, null=True)
     due_date = models.DateField(default=datetime.now, null=False)
     expiry_date = models.DateField(default=datetime.now, null=False)
     comment = models.TextField(max_length=300, blank=True)
