@@ -116,6 +116,7 @@ class PunishmentType(models.Model):
 class PoliceRecord(models.Model):
     vehicle_id = models.ForeignKey(Vehicle, on_delete=models.CASCADE, null=True)
     user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+    record_date = models.DateField(default=datetime.now, null=False)
     breach_type_id = models.ForeignKey(BreachType, on_delete=models.CASCADE, null=True)
     punishment_type_id = models.ForeignKey(PunishmentType, on_delete=models.CASCADE, null=True)
     due_date = models.DateField(default=datetime.now, null=False)
@@ -164,9 +165,9 @@ class MaintenanceRecord(models.Model):
     maintenance_type_id = models.ForeignKey(MaintenanceType, on_delete=models.CASCADE, null=True)
     record_date = models.DateField(default=datetime.now, null=False)
     mileage = models.IntegerField(null=False)
-    description = models.TextField(max_length=500)
+    comment = models.TextField(max_length=500)
     products_used = models.TextField(max_length=500)
-    expiry_date = models.DateField(default=datetime.now, null=False)
+   
 
     def __str__(self):
         return self.id
