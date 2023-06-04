@@ -1,81 +1,100 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block content %}
     <br><br>
     <center><h2>PLEASE FIND AND CLICK ORGANISATION TO SEND JOIN REQUEST</h2></center>
     <br>
-    <div class="search-container">
-  <form action="{% url 'join' %}" method="GET" class="search-form">
-    <div class="search-input-wrapper">
-      <input type="text" name="query" id="search-input" placeholder="Start typing organization name or address..." class="search-input">
-      <div class="auth_link">
-      <button type="submit" class="auth-button">SEARCH</button>
-    </div>
-    </div>
-  </form>
-  <br>
+    
+    <div class="search-container"><img src="{% static 'images/organisation.png' %}" height="80px" style="padding-bottom: 5px;">
+        <form action="request_sent.html" method="GET" class="search-form">
+            <div class="search-input-wrapper">
+                <input type="text" name="query" id="search-input" placeholder="Start typing organisation name or address..." class="search-input">
+            </div>
+        </form>
+        <br>
         <div id="search-results" class="result-container">
             {% if user.is_authenticated %}
                 {% for organisation in organisations %}
-                    <p class="organisation">{{ organisation.title }} ({{ organisation.address }})</p>
+                    <p class="organisation" data_id="{{ organisation.id }}">{{ organisation.title }} ({{ organisation.address }})</p>
                 {% endfor %}
             {% endif %}
         </div>
+        <br>
+        <div class="auth_link" style="position: relative;">
+            <a href="{% url 'request_sent' %}" class="auth-button">SKIP THIS STEP</a>
+        </div>
     </div>
-    </center>
+</center>
 
-    {% for customsrecord in customsrecords %}
-    <p class="organisation">{{ customsrecord.country_of_origin }} ({{ customsrecord.mileage }})</p>
-{% endfor %}
-    
-    <script>
-        $(document).ready(function() {
-            // Store all organizations in a variable
-            var allOrganisations = $('.organisation');
-    
-            // Store the original HTML content of the container
-            var originalContent = allOrganisations.clone();
-    
-            // Handle search input change event
-            $('#search-input').on('input', function() {
-                var query = $(this).val().toLowerCase();
-                var resultsContainer = $('#search-results');
-                resultsContainer.empty();
-    
-                // Display all organizations if search input is empty
-                if (query === '') {
-                    resultsContainer.append(originalContent);
-                } else {
-                    // Filter organizations based on search input
-                    var matchedOrganisations = allOrganisations.filter(function() {
-                        var title = $(this).text().split('\n')[0].trim().toLowerCase();
-                        return title.includes(query);
-                    }).clone();
-    
-                    // Show organizations as soon as a match is found
-                    if (matchedOrganisations.length > 0) {
-                        resultsContainer.append(matchedOrganisations);
-                    } else {
-                        resultsContainer.append('<p>No results found</p>');
-                    }
-                }
+<script>
+    $(document).ready(function() {
+        var allOrganisations = $('.organisation');
+        var resultsContainer = $('#search-results');
+        resultsContainer.hide();
+
+        $('#search-input').on('input', function() {
+            var query = $(this).val().toLowerCase();
+            resultsContainer.empty();
+
+            if (query === '') {
+                resultsContainer.hide();
+                return;
+            }
+
+            var matchedOrganisations = allOrganisations.filter(function() {
+                var title = $(this).text().split('\n')[0].trim().toLowerCase();
+                return title.includes(query);
             });
-        });
-    </script>
-    
 
+            if (matchedOrganisations.length > 0) {
+                resultsContainer.show();
+
+                matchedOrganisations.each(function() {
+                    var objectId = $(this).attr("data_id");
+
+                    var linkElement = $('<a>', {
+                        href: 'request_sent',
+                        text: $(this).text(),
+                        style: 'display: block; color: black; text-decoration: none; padding: 5px;'
+                    });
+
+                    linkElement.on('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Send the objectId to the server
+                        $.ajax({
+                            type: 'POST',
+                            url: '{% url "join" %}',
+                            data: {
+                                'organisation_id': objectId,
+                                'csrfmiddlewaretoken': '{{ csrf_token }}'
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                
+                                // Handle the success response here
+                                window.location.href = "{% url 'request_sent' %}";
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(xhr.responseText);
+                                // Handle the error response here
+                            }
+                        });
+                    });
+
+                    resultsContainer.append(linkElement);
+                });
+            } else {
+                resultsContainer.append('<p>No results found</p>');
+            }
+        });
+    });
+</script>
 
 {% endblock %}
 
-    
-    
-        
-    
-    
-    
-    
-    
-    
     
     <br><br><br><br><br><br><br><br>
     <p>

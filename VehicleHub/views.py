@@ -1,12 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .forms import RegisterForm
-from django.urls import reverse
 from django.contrib.auth import authenticate, login
-from .models import Organisation, CustomsRecord
-import django_filters
-
+from .models import Organisation
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 
 
@@ -53,9 +52,23 @@ def login_view(request):
 
 def join_view(request):
     organisations = Organisation.objects.all()
-    customsrecords = CustomsRecord.objects.all()
     context = {
         'organisations': organisations,
-        'customsrecords': customsrecords
     }
+
+    if request.method == 'POST':
+        organisation_id = request.POST.get('organisation_id')
+        if organisation_id:
+            organisation = Organisation.objects.get(id=organisation_id)
+            request.user.organisation_id = organisation.id
+            request.user.save()
+            return JsonResponse({'success': True})
+
     return render(request, 'join.html', context)
+
+
+
+
+
+def request_sent_view(request):
+    return render(request, 'request_sent.html')
