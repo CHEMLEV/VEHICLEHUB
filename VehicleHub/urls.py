@@ -9,6 +9,7 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('join/', views.join_view, name='join'),
     path('request_sent.html', views.request_sent_view, name='request_sent'),
+    path('ui.html', views.ui_view, name='ui'),
     
   
 ]

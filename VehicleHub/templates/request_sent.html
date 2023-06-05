@@ -2,12 +2,11 @@
 
 {% block content %}
     <br><br>
-    <center><h2>Dear {{user.first_name}}, your request to join {{user.organisation.title}} has been approved.</h2></center>
+    <center><h2>Dear {{user.first_name}}, your request to join {{user.organisation.title}} has been approved.</h2>
     <br>
-    <div class="search-container">
-  
-  <br>
-      
+    
+    <div class="auth_link" style="position: relative;">
+        <a href="{% url 'ui' %}" class="auth-button">PROCEED FURTHER</a>
     </div>
     </center>
     

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+    <br><br>
+    <center><h2>PLESASE CHOOSE ONE OF THE FOLLOWING OPTIONS</h2>
+    <br>
+        
+    
+        <div class="auth_link" style="position: relative;">
+            <a href="{% url 'request_sent' %}" class="auth-button">REQUEST REPORT</a>
+        </div><br><br>
+
+        <div> OR </div><br>
+
+        <div class="auth_link" style="position: relative;">
+            <a href="{% url 'request_sent' %}" class="auth-button">ADD/EDIT RECORD</a>
+        </div>
+   
+</center>
+
+{% endblock %}

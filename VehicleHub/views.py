@@ -67,8 +67,9 @@ def join_view(request):
     return render(request, 'join.html', context)
 
 
-
-
-
 def request_sent_view(request):
     return render(request, 'request_sent.html')
+
+
+def ui_view(request):
+    return render(request, 'ui.html')

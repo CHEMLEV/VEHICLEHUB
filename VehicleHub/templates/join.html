@@ -3,11 +3,14 @@
 {% load static %}
 
 {% block content %}
+
+{% if user.organisation_id is null %}
+
     <br><br>
     <center><h2>PLEASE FIND AND CLICK ORGANISATION TO SEND JOIN REQUEST</h2></center>
     <br>
     
-    <div class="search-container"><img src="{% static 'images/organisation.png' %}" height="80px" style="padding-bottom: 5px;">
+    <div class="search-container"><img src="{% static 'images/organisation.png' %}" height="50px" style="padding-bottom: 5px;">
         <form action="request_sent.html" method="GET" class="search-form">
             <div class="search-input-wrapper">
                 <input type="text" name="query" id="search-input" placeholder="Start typing organisation name or address..." class="search-input">
@@ -20,13 +23,16 @@
                     <p class="organisation" data_id="{{ organisation.id }}">{{ organisation.title }} ({{ organisation.address }})</p>
                 {% endfor %}
             {% endif %}
-        </div>
-        <br>
-        <div class="auth_link" style="position: relative;">
-            <a href="{% url 'request_sent' %}" class="auth-button">SKIP THIS STEP</a>
-        </div>
+        </div>        
     </div>
-</center>
+
+{% else %}
+    <!-- Redirect to another page when organisation.type_id does not exist -->
+    <script>
+        window.location.href = "{% url 'ui' %}";
+    </script>
+{% endif %}
+
 
 <script>
     $(document).ready(function() {
