@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+{% if user.is_authenticated %}
+
+<center><h1>WELCOME</h1></center>
+
+<center>
+    <img src="{% static 'images/books.jpg' %}" alt="home-image" max-width="100%" height="320" >
+</center><br>
+
+    Welcome to Vehicle Hub.  </p> <br>
+        
+    </p>
+    <br>
+    
+    <center><a href="{% url 'vehicle_list' %}" class="button-dark">START BROWSING VEHICLES</a><br></center>
+    
+    <p class="placeholder">
+        <br>
+        This is a project created by Alexey, Mei from Whitecliffe NZ for
+        educational purposes only.
+    </p>
+{% else %} 
+<body>
+    <a href="{% url 'login' %}">Go to Login page</a>
+</body>  
+
+{% endif %}
+
+{% endblock content %}

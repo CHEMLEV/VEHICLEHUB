@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+ 
+  <div class="tour-entry">
+
+    <h1>{{ vehicle.VIN }} </h1>
+    <h4>Year: {{vehicle.year }}
+        <br><br>   
+        Make: {{ vehicle.make }}
+       <br><br>
+       {{vehicle.model}}
+       <br> <br>
+       {% if vehicle.fuel != null %}
+       Fuel: {{vehicle.fuel}}
+       <br>
+       {% endif %}
+       {% if vehicle.output != null %}
+       Output: {{vehicle.output}}
+       <br>
+       {% endif %}
+       {% if vehicle.drivetrain != null %}
+       Drivetrain: {{vehicle.drivetrain}}
+       <br>
+       {% endif %}
+       {% if vehicle.trim_line != null %}
+       Trim line: {{vehicle.trim_line}}
+       <br>
+       {% endif %}
+
+  </div>
+
+  <center>
+
+    <a href="{% url 'vehicle_edit' vehicle.pk %}" class="button-dark">EDIT</a>
+
+
+    <a href="{% url 'vehicle_delete' vehicle.pk %}" class="button-dark">DELETE</a><br><br>
+
+  
+    <a href="{% url 'home' %}">Home</a>
+  </center>
+
+{% endif %}
+
+{% endblock content %}

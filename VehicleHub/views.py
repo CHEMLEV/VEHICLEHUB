@@ -3,9 +3,14 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .forms import RegisterForm
 from django.contrib.auth import authenticate, login
-from .models import Organisation
+from .models import Organisation, Vehicle
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
+from django.urls import reverse_lazy, reverse
+from . import views
+from .filters import VehicleFilter
 
 
 
@@ -73,3 +78,74 @@ def request_sent_view(request):
 
 def ui_view(request):
     return render(request, 'ui.html')
+
+
+def HomePageView(request):
+    return render (request, 'home.html') 
+
+
+
+def vehicle_filter_list(request):
+    
+    vehicles = Vehicle.objects.all()
+
+    vehicleFilter = VehicleFilter(queryset=vehicles)
+
+    if request.method == "POST":
+        vehicleFilter = VehicleFilter(request.POST, queryset=vehicles)
+
+    context = {
+        'vehicleFilter': vehicleFilter
+    }
+
+    return render(request, 'vehicle_list.html', context)
+
+# Vehicles
+class VehiclesListView(ListView):
+    model = Vehicle
+    template_name = "vehicle_list.html"
+
+    def get(self, request, *args, **kwargs):
+        view = views.vehicle_filter_list
+        return view(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        view = views.vehicle_filter_list
+        return view(request, *args, **kwargs)
+
+class VehicleDetailsView(DetailView): 
+    model = Vehicle
+    template_name = "vehicle_detail.html"
+
+class VehicleCreateView(LoginRequiredMixin, CreateView):  # new 
+    model = Vehicle
+    template_name = "vehicle_new.html"
+    fields = ("VIN", "year", "make", "model", "fuel", "output", "drivetrain", "trim_line")
+    success_url = reverse_lazy('vehicle_list')
+
+
+class VehicleUpdateView(UpdateView): #LoginRequiredMixin, UserPassesTestMixin, 
+    model = Vehicle
+    fields = (
+        "VIN", "year", "make", "model", "fuel", "output", "drivetrain", "trim_line"
+    )
+    template_name = "vehicle_edit.html"
+    success_url = reverse_lazy('vehicle_list')
+
+    def test_func(self):  # new
+        obj = self.get_object()
+        return obj.developer == self.request.user
+
+
+class VehicleDeleteView(DeleteView): #LoginRequiredMixin, UserPassesTestMixin, 
+    model = Vehicle
+    fields = (
+        "VIN",
+        "year",
+    )
+    template_name = "vehicle_delete.html"
+    success_url = reverse_lazy('vehicle_list')
+
+    def test_func(self):  # new
+        obj = self.get_object()
+        return obj.developer == self.request.user
