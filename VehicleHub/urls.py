@@ -11,6 +11,7 @@ urlpatterns = [
     path('join/', views.join_view, name='join'),
     path('request_sent.html', views.request_sent_view, name='request_sent'),
     path('ui.html', views.ui_view, name='ui'),
+    path('manage_records.html', views.manage_records_view, name='manage_records'),
     path('home/', views.HomePageView, name = "home"),
     path("vehicles/", VehiclesListView.as_view(), name = "vehicle_list"),
     path("vehicle/<int:pk>/", VehicleDetailsView.as_view(), name = "vehicle_detail"),

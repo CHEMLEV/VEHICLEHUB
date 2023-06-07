@@ -79,6 +79,9 @@ def request_sent_view(request):
 def ui_view(request):
     return render(request, 'ui.html')
 
+def manage_records_view(request):
+    return render(request, 'manage_records.html')
+
 
 def HomePageView(request):
     return render (request, 'home.html') 

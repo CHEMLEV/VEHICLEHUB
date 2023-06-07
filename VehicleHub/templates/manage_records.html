@@ -4,19 +4,22 @@
 
 {% block content %}
     <br><br>
-    <center><h2>PLESASE CHOOSE ONE OF THE FOLLOWING OPTIONS</h2>
+    <center><h2></h2>
     <br>
         
     
         <div class="auth_link" style="position: relative;">
-            <a href="{% url 'request_sent' %}" class="auth-button">REQUEST A REPORT</a>
+            <a href="{% url 'request_sent' %}" class="auth-button">ADD RERCORD</a>
         </div><br><br>
 
         <div> OR </div><br>
 
         <div class="auth_link" style="position: relative;">
-            <a href="{% url 'manage_records' %}" class="auth-button">MANAGE RECORDS</a>
+            <a href="{% url 'request_sent' %}" class="auth-button">SEARCH/EDIT RECORD</a>
+            
         </div>
+        <br><br>
+        <div>YOU CAN VIEW AND EDIT RECORDS MADE BY YOUR ORGANISATION ONLY</div><br>
    
 </center>
 
