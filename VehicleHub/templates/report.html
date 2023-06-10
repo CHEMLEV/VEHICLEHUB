@@ -27,7 +27,7 @@
 
 {% for vehicle in vehicleFilter.qs %}
     <div class="report_search">
-        <h2><a href="{% url 'vehicle_detail' vehicle.pk %}">{{ forloop.counter }}. PLATES: {{ vehicle.numberplates}}    VIN: {{vehicle.VIN}}<br></a></h2>
+        <h2><a href="{% url 'vehicle_detail' vehicle.pk %}">{{ forloop.counter }}. PLATES: {{ vehicle.numberplates}} VIN: {{vehicle.VIN}}<br></a></h2>         
      </div>
 {% endfor %}
 

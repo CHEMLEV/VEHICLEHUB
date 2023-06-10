@@ -1,6 +1,7 @@
 import django_filters
-from .models import Organisation, Vehicle
+from .models import Organisation, Vehicle, NumberPlate
 from django import forms
+from django.db.models import Subquery, OuterRef
 
 
 
@@ -34,12 +35,22 @@ class VehicleFilter(django_filters.FilterSet):
 
     numberplates = django_filters.CharFilter(
         lookup_expr='icontains',
-        field_name='numberplate__new_plates',
+        method='filter_numberplates',
         label='PLATES',
         widget=forms.TextInput(attrs={'class': 'filter_field'})
     )
 
+    def filter_numberplates(self, queryset, name, value):
+        latest_numberplate_ids = NumberPlate.objects.filter(
+            vehicle_id=OuterRef('pk')
+        ).order_by('-record_date').values('id')[:1]
+
+        return queryset.filter(
+            numberplate__id__in=Subquery(latest_numberplate_ids),
+            numberplate__new_plates__icontains=value
+        )
+
     class Meta:
         model = Vehicle
-        fields = [ 'numberplates', 'vin']
+        fields = ['numberplates', 'vin']
 

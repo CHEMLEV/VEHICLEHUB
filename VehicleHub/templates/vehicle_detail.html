@@ -6,13 +6,9 @@
 
 {% if user.is_authenticated %}
  
-  <div><h1>
+  <div><h1>    
 
-    Plates that vehicle ever had (from old to new):
-
-    {% for record in vehicle.numberplate_set.all %}
-        {{ record.new_plates }}
-      {% endfor %}
+      General information: 
 </h1>
     <h2>   Make: {{ vehicle.make }}
        <br>
@@ -77,12 +73,18 @@
       {{ forloop.counter }}.
     {{ ownership.record_date }} at {{ ownership.mileage }} km<br>
   {% endfor %}
-      <br>
-      
-           
-   
-    </h2>
+      <br>              
+       </h2>
   </div>
+
+
+  <div><h1>Plates that vehicle ever had:</h1>
+
+  <h2> {% for record in vehicle.numberplate_set.all %}
+        {{ record.new_plates }} issued on {{ record.record_date}} at {{record.mileage}} km <br>
+      {% endfor %}</h2>
+
+  <div>
 
 
 {% endif %}
