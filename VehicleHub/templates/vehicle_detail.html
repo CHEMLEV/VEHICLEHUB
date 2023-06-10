@@ -72,10 +72,10 @@
       Total number of owners:    
       {{ vehicle.ownerships.all.count }}<br>
 
-      Ownership change dates:  <br>  
+      Ownership change dates and mileage:  <br>  
       {% for ownership in vehicle.ownerships.all %}
       {{ forloop.counter }}.
-    {{ ownership.record_date }}<br>
+    {{ ownership.record_date }} at {{ ownership.mileage }} km<br>
   {% endfor %}
       <br>
       
