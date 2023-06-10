@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+<h1>Search a vehicle by plates or/and VIN to request a report </h1>
+
+<form class="search-form" method="POST">
+    {% csrf_token %}
+
+    {{ vehicleFilter.form.as_p }}
+    
+    <div class="auth_link">
+        <button type="submit" class="auth-button">SEARCH</button>
+      </div>
+
+</form>
+
+<br />
+
+
+<h1>Search results: </h1>
+
+
+{% for vehicle in vehicleFilter.qs %}
+    <div class="report_search">
+        <h2><a href="{% url 'vehicle_detail' vehicle.pk %}">{{ forloop.counter }}. PLATES: {{ vehicle.numberplates}}    VIN: {{vehicle.VIN}}<br></a></h2>
+     </div>
+{% endfor %}
+
+
+{% endif %} 
+
+{% endblock content %}
+    

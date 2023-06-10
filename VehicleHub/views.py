@@ -97,16 +97,22 @@ def vehicle_filter_list(request):
     if request.method == "POST":
         vehicleFilter = VehicleFilter(request.POST, queryset=vehicles)
 
+    for vehicle in vehicleFilter.qs:
+    
+        numberplates_list = list(vehicle.numberplate_set.all().values_list('new_plates', flat=True))
+        vehicle.numberplates = numberplates_list[-1] if numberplates_list else ""
+
+
     context = {
         'vehicleFilter': vehicleFilter
     }
 
-    return render(request, 'vehicle_list.html', context)
+    return render(request, 'report.html', context)
 
 # Vehicles
 class VehiclesListView(ListView):
     model = Vehicle
-    template_name = "vehicle_list.html"
+    template_name = "report.html"
 
     def get(self, request, *args, **kwargs):
         view = views.vehicle_filter_list
@@ -124,7 +130,7 @@ class VehicleCreateView(LoginRequiredMixin, CreateView):  # new
     model = Vehicle
     template_name = "vehicle_new.html"
     fields = ("VIN", "year", "make", "model", "fuel", "output", "drivetrain", "trim_line")
-    success_url = reverse_lazy('vehicle_list')
+    success_url = reverse_lazy('report')
 
 
 class VehicleUpdateView(UpdateView): #LoginRequiredMixin, UserPassesTestMixin, 
@@ -133,7 +139,7 @@ class VehicleUpdateView(UpdateView): #LoginRequiredMixin, UserPassesTestMixin,
         "VIN", "year", "make", "model", "fuel", "output", "drivetrain", "trim_line"
     )
     template_name = "vehicle_edit.html"
-    success_url = reverse_lazy('vehicle_list')
+    success_url = reverse_lazy('report')
 
     def test_func(self):  # new
         obj = self.get_object()
@@ -147,7 +153,7 @@ class VehicleDeleteView(DeleteView): #LoginRequiredMixin, UserPassesTestMixin,
         "year",
     )
     template_name = "vehicle_delete.html"
-    success_url = reverse_lazy('vehicle_list')
+    success_url = reverse_lazy('report')
 
     def test_func(self):  # new
         obj = self.get_object()

@@ -28,31 +28,18 @@ class VehicleFilter(django_filters.FilterSet):
     vin = django_filters.CharFilter(
         lookup_expr='icontains',
         field_name='VIN',
-        label='VIN',
+        label='VIN     ',
         widget=forms.TextInput(attrs={'class': 'filter_field'})
     )
 
-    year = django_filters.CharFilter(
+    numberplates = django_filters.CharFilter(
         lookup_expr='icontains',
-        field_name='year',
-        label='Year',
-        widget=forms.TextInput(attrs={'class': 'filter_field'})
-    )
-
-    make = django_filters.CharFilter(
-        lookup_expr='icontains',
-        field_name='make',
-        label='Make',
-        widget=forms.TextInput(attrs={'class': 'filter_field'})
-    )
-
-    model = django_filters.CharFilter(
-        lookup_expr='icontains',
-        field_name='model',
-        label='Model',
+        field_name='numberplate__new_plates',
+        label='PLATES',
         widget=forms.TextInput(attrs={'class': 'filter_field'})
     )
 
     class Meta:
         model = Vehicle
-        fields = ['vin', 'year', 'make', 'model']
+        fields = [ 'numberplates', 'vin']
+
