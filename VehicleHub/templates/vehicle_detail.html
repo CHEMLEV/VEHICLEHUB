@@ -6,21 +6,24 @@
 
 {% if user.is_authenticated %}
  
-  <div class="tour-entry">
+  <div><h1>
 
-    <h1>{{ vehicle.VIN }} </h1>
-    <h4>Year: {{vehicle.year }}
-        <br><br>   
-        Make: {{ vehicle.make }}
-       <br><br>
-       {{vehicle.model}}
-       <br> <br>
+    Plates that vehicle ever had (from old to new):
+
+    {% for record in vehicle.numberplate_set.all %}
+        {{ record.new_plates }}
+      {% endfor %}
+</h1>
+    <h2>   Make: {{ vehicle.make }}
+       <br>
+       Model: {{vehicle.model}}
+       <br> 
        {% if vehicle.fuel != null %}
        Fuel: {{vehicle.fuel}}
        <br>
        {% endif %}
        {% if vehicle.output != null %}
-       Output: {{vehicle.output}}
+       Output: {{vehicle.output}} kW
        <br>
        {% endif %}
        {% if vehicle.drivetrain != null %}
@@ -31,19 +34,56 @@
        Trim line: {{vehicle.trim_line}}
        <br>
        {% endif %}
-
+</h2>
   </div>
 
-  <center>
 
-    <a href="{% url 'vehicle_edit' vehicle.pk %}" class="button-dark">EDIT</a>
+  <div><h1>
 
+    Customs information:  </h1>
+    <h2>
+      Customs clearance date:    
+      {{ vehicle.customsrecord.record_date }}
+      <br>
+      
+      Mileage at clearance: 
+      {{ vehicle.customsrecord.mileage }}
+      <br>
 
-    <a href="{% url 'vehicle_delete' vehicle.pk %}" class="button-dark">DELETE</a><br><br>
+      Imported as new or used: 
+      {{ vehicle.customsrecord.import_as }}      
+      <br>      
 
-  
-    <a href="{% url 'home' %}">Home</a>
-  </center>
+      Imported as damaged:
+      {{ vehicle.customsrecord.damaged }}      
+      <br>
+
+      Country of origin:
+      {{ vehicle.customsrecord.country_of_origin }}      
+      <br>
+   
+    </h2>
+  </div>
+
+  <div><h1>
+
+    Owhership records:  </h1>
+    <h2>
+      Total number of owners:    
+      {{ vehicle.ownerships.all.count }}<br>
+
+      Ownership change dates:  <br>  
+      {% for ownership in vehicle.ownerships.all %}
+      {{ forloop.counter }}.
+    {{ ownership.record_date }}<br>
+  {% endfor %}
+      <br>
+      
+           
+   
+    </h2>
+  </div>
+
 
 {% endif %}
 

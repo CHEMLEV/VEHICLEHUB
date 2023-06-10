@@ -43,7 +43,8 @@ class Vehicle(models.Model):
 
 
 class CustomsRecord(models.Model):
-    vehicle_id = models.ForeignKey(Vehicle, on_delete=models.CASCADE, null=True)
+    
+    vehicle_id = models.OneToOneField(Vehicle, on_delete=models.CASCADE, null=True)
     user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
     record_date = models.DateField(default=datetime.now, null=False)
     import_as = models.TextField(max_length=4, default="")
@@ -56,14 +57,14 @@ class CustomsRecord(models.Model):
 
 
 class Ownership(models.Model):
-    vehicle_id = models.ForeignKey(Vehicle, on_delete=models.CASCADE, null=True)
+    vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE, null=True, related_name='ownerships')
     user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
     record_date = models.DateField(default=datetime.now, null=False)
     mileage = models.IntegerField(null=False)
     new_owner = models.TextField(max_length=50, null=False)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 class NumberPlate(models.Model):
