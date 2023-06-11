@@ -25,11 +25,22 @@
 <h1>Search results: </h1>
 
 
+{% if vehicleFilter.qs %}
 {% for vehicle in vehicleFilter.qs %}
-    <div class="report_search">
-        <h2><a href="{% url 'vehicle_detail' vehicle.pk %}">{{ forloop.counter }}. PLATES: {{ vehicle.numberplates}} VIN: {{vehicle.VIN}}<br></a></h2>         
-     </div>
+<div class="report_search">
+    <h2><a href="{% url 'vehicle_detail' vehicle.pk %}"> {{ forloop.counter }}.
+        {% if vehicle.numberplates %}
+            <div class="plates">{{ vehicle.numberplates }}</div>
+        {% endif %}
+        {{ vehicle.make }}  {{ vehicle.model }}
+        VIN: {{ vehicle.VIN }}
+        <br>
+    </a></h2>         
+</div>
 {% endfor %}
+{% else %}
+    <h2>No results found</h2>
+{% endif %}
 
 
 {% endif %} 

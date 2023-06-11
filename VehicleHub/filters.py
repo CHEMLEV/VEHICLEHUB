@@ -53,4 +53,3 @@ class VehicleFilter(django_filters.FilterSet):
     class Meta:
         model = Vehicle
         fields = ['numberplates', 'vin']
-

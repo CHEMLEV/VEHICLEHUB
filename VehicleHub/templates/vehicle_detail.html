@@ -43,7 +43,7 @@
       <br>
       
       Mileage at clearance: 
-      {{ vehicle.customsrecord.mileage }}
+      {{ vehicle.customsrecord.mileage }} km
       <br>
 
       Imported as new or used: 
@@ -78,13 +78,34 @@
   </div>
 
 
-  <div><h1>Plates that vehicle ever had:</h1>
+  <div><h1>Plates that the vehicle ever had:</h1>
 
   <h2> {% for record in vehicle.numberplate_set.all %}
         {{ record.new_plates }} issued on {{ record.record_date}} at {{record.mileage}} km <br>
       {% endfor %}</h2>
 
   <div>
+
+    <div><h1>Loans:</h1>
+
+      <h2>
+        {% for record in vehicle.financerecord_set.all %}
+        {{ forloop.counter }}. Provided by {{ record.user_id.organisation }}. Commencement date: {{ record.record_date }}. Maturity date: {{ record.expiry_date }}.
+        {% if record.actual_completion_date %}
+            Repaid in full.
+        {% else %}
+            Not yet repaid.
+        {% endif %}
+        <br>
+    {% empty %}
+        No loans were secured against the vehicle.
+    {% endfor %}
+        </h2>
+    
+      <div>
+
+
+
 
 
 {% endif %}
