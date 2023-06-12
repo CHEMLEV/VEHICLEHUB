@@ -133,7 +133,7 @@ class AccidentRecord(models.Model):
     user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
     record_date = models.DateField(default=datetime.now, null=False)
     mileage = models.IntegerField(null=False)
-    other_participants = models.TextField(max_length=3)
+    other_participants = models.TextField(max_length=80, null=True)
     comment = models.TextField(max_length=300, blank=True)
 
     def __str__(self):
