@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<br>
+<center><h2>PLESASE CHOOSE ONE OF THE FOLLOWING OPTIONS</h2>
+<br>
+        <a href="{% url 'vehicle_new' %}">
+        <img class="icon"src="{% static 'images/record_add.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
+        </a>
+        <br>
+    
+        <div class="auth_link" style="position: relative;">
+            <a href="{% url 'vehicle_new' %}" class="auth-button"> ADD VEHICLE RECORD</a>
+        </div><br>
+
+        <h2> OR <br></h2>
+
+        <a href="{% url 'request_report' %}">
+            <img class="icon" src="{% static 'images/record_add.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
+            </a>
+            <br>
+
+        <div class="auth_link" style="position: relative;">
+            <a href="{% url 'request_report' %}" class="auth-button">ADD CUSTOMS RECORD</a>
+            
+        </div>
+        
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <a href="{% url 'vehicle_new' %}">
+            <img class="icon" src="{% static 'images/record_add.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
+            </a>
+            <br>
+        
+            <div class="auth_link" style="position: relative;">
+                <a href="{% url 'vehicle_new' %}" class="auth-button"> ADD OWNERSHIP RECORD</a>
+            </div><br>
+
+            <h2> OR <br></h2>
+    
+            <a href="{% url 'request_report' %}">
+                <img class="icon" src="{% static 'images/record_add.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
+                </a>
+                <br>
+    
+            <div class="auth_link" style="position: relative;">
+                <a href="{% url 'request_report' %}" class="auth-button">ADD NUMBER PLATES RECORD</a>
+                
+            </div>
+
+            <br>
+            <br>
+            <br>
+            <br>
+    
+            <a href="{% url 'vehicle_new' %}">
+                <img class="icon" src="{% static 'images/record_add.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
+                </a>
+                <br>
+            
+                <div class="auth_link" style="position: relative;">
+                    <a href="{% url 'vehicle_new' %}" class="auth-button"> ADD FINANCE RECORD</a>
+                </div><br>    
+                                 
+                </div>
+
+
+                <br>
+                <br>
+                <br>
+                <br>
+        
+                <a href="{% url 'vehicle_new' %}">
+                    <img class="icon" src="{% static 'images/record_add.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
+                    </a>
+                    <br>
+                
+                    <div class="auth_link" style="position: relative;">
+                        <a href="{% url 'vehicle_new' %}" class="auth-button"> ADD OFFENCE RECORD</a>
+                    </div><br>
+
+                    <h2> OR <br></h2>
+
+                    <a href="{% url 'vehicle_new' %}">
+                        <img class="icon" src="{% static 'images/record_add.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
+                        </a>
+                        <br>
+                    
+                        <div class="auth_link" style="position: relative;">
+                            <a href="{% url 'vehicle_new' %}" class="auth-button"> ADD ACCIDENT RECORD</a>
+                        </div><br>    
+                                         
+                        </div>
+
+
+
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                
+                        <a href="{% url 'vehicle_new' %}">
+                            <img class="icon" src="{% static 'images/record_add.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
+                            </a>
+                            <br>
+                        
+                            <div class="auth_link" style="position: relative;">
+                                <a href="{% url 'vehicle_new' %}" class="auth-button"> ADD MAINTENANCE RECORD</a>
+                            </div><br>
+   
+</center>
+
+{% endblock %}

@@ -82,6 +82,12 @@ def ui_view(request):
 def manage_records_view(request):
     return render(request, 'manage_records.html')
 
+def add_record_types_view(request):
+    return render(request, 'add_record_types.html')
+
+def search_edit_record_types_view(request):
+    return render(request, 'search_edit_record_types.html')
+
 
 def HomePageView(request):
     return render (request, 'home.html') 
