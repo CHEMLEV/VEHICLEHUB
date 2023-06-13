@@ -9,7 +9,10 @@
 <h1>
 
 {% with last_record=vehicle.numberplate_set.last %}
-      REPORT FOR <div class="plates-report">{{ last_record.new_plates }} </div>
+      REPORT FOR
+      {% if last_record.new_plates %}
+      <div class="plates-report">{{ last_record.new_plates }} </div>
+      {% endif %}
       {% endwith %}
       <br><br>
 </h1>
@@ -97,7 +100,9 @@
 
   <h3> {% for record in vehicle.numberplate_set.all %}
         {{ record.new_plates }} issued on {{ record.record_date}} at {{record.mileage}} km <br>
-      {% endfor %}</h3>
+        {% empty %}
+        No plates were ever issued for this the vehicle.
+    {% endfor %}</h3>
 
   </div><br>
 
