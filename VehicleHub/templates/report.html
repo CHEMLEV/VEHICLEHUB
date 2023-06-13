@@ -7,6 +7,10 @@
 {% if user.is_authenticated %}
 
 <h1>Search a vehicle by plates or/and VIN to request a report </h1>
+<br>
+
+
+<img src="{% static 'images/coupe.jpg' %}" height="60px" style="padding-left: 40px; padding-right: 40px; border-bottom: 4px solid black;">
 
 <form class="search-form" method="POST">
     {% csrf_token %}

@@ -3,16 +3,24 @@
 {% load static %}
 
 {% block content %}
-    <br><br>
-    <center><h2></h2>
-    <br>
-        
+<br>
+<center><h2>PLESASE CHOOSE ONE OF THE FOLLOWING OPTIONS</h2>
+<br>
+        <a href="{% url 'report' %}">
+        <img src="{% static 'images/record_add.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
+        </a>
+        <br>
     
         <div class="auth_link" style="position: relative;">
             <a href="{% url 'report' %}" class="auth-button"> ADD RERCORD</a>
-        </div><br><br>
+        </div><br>
 
-        <div> OR </div><br>
+        <h2> <br> OR <br><br></h2>
+
+        <a href="{% url 'report' %}">
+            <img src="{% static 'images/record_search_edit.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
+            </a>
+            <br>
 
         <div class="auth_link" style="position: relative;">
             <a href="{% url 'report' %}" class="auth-button">SEARCH/EDIT RECORD</a>

@@ -6,13 +6,13 @@
 
 {% if user.is_authenticated %}
 
-<h3>
-  <br>
+<h1>
+
 {% with last_record=vehicle.numberplate_set.last %}
-      <div class="plates-report">{{ last_record.new_plates }} </div>
+      REPORT FOR <div class="plates-report">{{ last_record.new_plates }} </div>
       {% endwith %}
       <br><br>
-</h3>
+</h1>
  
   <div><h1>    
 
@@ -20,8 +20,9 @@
 </h1>
     <h3>       
               
-       
-       Make: {{vehicle.make}}
+      VIN: {{vehicle.VIN}}
+      <br>
+      Make: {{vehicle.make}}
        <br>
        Model: {{vehicle.model}}
        <br> 
