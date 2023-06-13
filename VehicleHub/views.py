@@ -107,12 +107,12 @@ def vehicle_filter_list(request):
         'vehicleFilter': vehicleFilter
     }
 
-    return render(request, 'report.html', context)
+    return render(request, 'request_report.html', context)
 
 # Vehicles
 class VehiclesListView(ListView):
     model = Vehicle
-    template_name = "report.html"
+    template_name = "request_report.html"
 
     def get(self, request, *args, **kwargs):
         view = views.vehicle_filter_list
@@ -121,10 +121,12 @@ class VehiclesListView(ListView):
     def post(self, request, *args, **kwargs):
         view = views.vehicle_filter_list
         return view(request, *args, **kwargs)
+    
 
 class VehicleDetailsView(DetailView): 
     model = Vehicle
-    template_name = "vehicle_detail.html"
+    template_name = "report_details.html"
+
 
 class VehicleCreateView(LoginRequiredMixin, CreateView):  # new 
     model = Vehicle
