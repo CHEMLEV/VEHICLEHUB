@@ -4,6 +4,8 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
+
 {% if user.organisation_id is null %}
 
     <br><br>
@@ -99,10 +101,10 @@
     });
 </script>
 
-{% endblock %}
+{% else %}
 
-    
-    <br><br><br><br><br><br><br><br>
-    <p>
-        This is a project created by Alexey, Mei from Whitecliffe NZ for educational purposes only.
-    </p>
+    <h2>You must be logged in to view this page.</h2>
+
+{% endif %}
+
+{% endblock %}
