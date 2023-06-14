@@ -21,7 +21,19 @@
 
     <div class="base-container">
         <div class="base-logo">
-          <a href="/login"><img src="{% static 'images/logo1.jpg' %}" height="80px"></a>
+
+          {% if user.organisation_id %}
+          <a href="{% url 'ui' %}"><img src="{% static 'images/logo1.jpg' %}" height="80px"></a>
+          {% endif %}
+
+          {% if user.organisation_id is null %}
+          <img src="{% static 'images/logo1.jpg' %}" height="80px">
+          {% endif %}
+
+
+
+          
+
         </div>
         <div class="base-text-container">
           <h5 class="base-text">
