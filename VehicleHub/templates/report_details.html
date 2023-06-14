@@ -171,6 +171,7 @@
               {{ forloop.counter }}. Date: {{ record.record_date }}. Mileage: {{ record.mileage }}. Maintenace type: {{record.maintenance_type_id.maintenance_type_title}}.
               {% if record.comment %} Details: {{record.comment}}. {% endif %}
               {% if record.products_used %} Products used: {{record.products_used}}.{% endif %}
+              {% if record.user_id.organisation.title %} Carried out by: {{record.user_id.organisation.title}}.{% endif %}
               
               <br>
           {% empty %}
