@@ -37,7 +37,7 @@ class Vehicle(models.Model):
     output = models.IntegerField(null=False)
     drivetrain = models.TextField(max_length=20, null=False)
     trim_line = models.TextField(max_length=20, null=False)
-    registred_owner_user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+    registered_owner_user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
     
 
     def __str__(self):
