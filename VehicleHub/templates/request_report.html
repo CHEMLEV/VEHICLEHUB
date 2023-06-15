@@ -45,9 +45,8 @@
         </div>
     {% endif %}
 
-    {% if user.organisation.organisation_type_id == 7 %}
-        {% if vehicle.registered_owner_user_id.id == user.id %}
-    
+    {% if user.organisation.organisation_type_id == 7 and vehicle.registered_owner_user_id.id == user.id %}
+           
         <div class="report_search">
             <h2><a href="{% url 'report_details' vehicle.pk %}">
                 {% if vehicle.numberplates %}
@@ -56,7 +55,7 @@
                 {{ vehicle.make }}  {{ vehicle.model }}
                 VIN: {{ vehicle.VIN }}
                 <br>
-                {% endif %}    
+               
                 
             </a></h2>
         </div>
