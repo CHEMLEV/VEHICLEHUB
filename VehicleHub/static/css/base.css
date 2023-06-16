@@ -147,4 +147,23 @@ body {
   margin-top: 15px;
 }
 
+.blue-row {
+  background-color: rgb(217, 224, 238);
+}
+
+.maroon-row {
+  background-color: rgb(231, 214, 214);
+}
+
+table td {
+  padding: 5px;
+  padding-left: 10px;
+}
+
+table th {
+  padding-left: 10px;
+  padding-right: 30px;
+  text-align: left;
+}
+
 

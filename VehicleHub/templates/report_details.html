@@ -164,22 +164,40 @@
               <br>
             </div>
 
-          <div><h1>Maintenance records:</h1>
-
-            <h3>
-              {% for record in vehicle.maintenancerecord_set.all|dictsort:"record_date" %}
-              {{ forloop.counter }}. Date: {{ record.record_date }}. Mileage: {{ record.mileage }}. Maintenace type: {{record.maintenance_type_id.maintenance_type_title}}.
-              {% if record.comment %} Details: {{record.comment}}. {% endif %}
-              {% if record.products_used %} Products used: {{record.products_used}}.{% endif %}
-              {% if record.user_id.organisation.title %} Carried out by: {{record.user_id.organisation.title}}.{% endif %}
-              
-              <br>
-          {% empty %}
-          No recorded maintenance history.
-          {% endfor %}
-              </h3>
-              <br>
-            </div>
+            <div>
+              <h1>Maintenance records:</h1>
+          
+              <table>
+                  <thead>
+                      <tr>
+                          <th><h2>#</h2></th>
+                          <th><h2>Date</h2></th>
+                          <th><h2>Mileage</h2></th>
+                          <th><h2>Maintenance Type</h2></th>
+                          <th><h2>Details</h2></th>
+                          <th><h2>Products Used</h2></th>
+                          <th><h2>Carried out by</h2></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {% for record in vehicle.maintenancerecord_set.all|dictsort:"record_date" %}
+                    <tr {% if forloop.counter|divisibleby:2 %}class="maroon-row"{% else %}class="blue-row"{% endif %}>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ record.record_date|date:"d-m-Y" }}</td>
+                        <td>{{ record.mileage }} km</td>
+                        <td>{{ record.maintenance_type_id.maintenance_type_title }}</td>
+                        <td>{% if record.comment %}{{ record.comment }}{% endif %}</td>
+                        <td>{% if record.products_used %}{{ record.products_used }}{% endif %}</td>
+                        <td>{% if record.user_id.organisation.title %}{{ record.user_id.organisation.title }}{% endif %}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7">No recorded maintenance history.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
       
 
