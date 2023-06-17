@@ -126,43 +126,72 @@
     
       
 
-        <div><h1>Accidents this vehicle was involved:</h1>
-
-          <h3>
-            {% for record in vehicle.accidentrecord_set.all %}
-            {{ forloop.counter }}. Date: {{ record.record_date }}. Details: {{ record.comment }}.
-            {% if record.other_participants %}
-            Other vehicles involved: {% if user.organisation.organisation_type.id == 3 %} {{ record.other_participants }}. {% else %} Yes. {% endif %}
-            {% else %}
-            Other vehicles involved: No.
-            {% endif %}
-            
-            <br>
-        {% empty %}
-        No reported accidents.
-        {% endfor %}
-            </h3>
-            <br>
-          </div>
-
-
-          <div><h1>Offences associated with this vehicle:</h1>
-
-            <h3>
-              {% for record in vehicle.policerecord_set.all %}
-              {{ forloop.counter }}. Date: {{ record.record_date }}. Offence: {{record.breach_type_id.breach_type_title}}.
-              {% if record.comment %} Details: {{record.comment}}. {% endif %}
-              {% if user.organisation.organisation_type.id == 3 %} Punishment: {{ record.punishment_type_id.punishment_type_title}}
+        <div>
+          <h1>Accidents this vehicle was involved:</h1>
       
-      {% endif %}
-              
-              <br>
-          {% empty %}
-          No reported offences.
-          {% endfor %}
-              </h3>
-              <br>
-            </div>
+          <table>
+              <thead>
+                  <tr>
+                    <th><h2>#</h2></th>
+                    <th><h2>Date</h2></th>
+                    <th><h2>Mileage</h2></th>
+                    <th><h2>Details</h2></th>
+                    <th><h2>Other vehicles involved</h2></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for record in vehicle.accidentrecord_set.all %}
+                  <tr {% if forloop.counter|divisibleby:2 %}class="maroon-row"{% else %}class="blue-row"{% endif %}>
+                      <td>{{ forloop.counter }}</td>
+                      <td>{{ record.record_date|date:"d-m-Y" }}</td>
+                      <td>{{ record.mileage }} km</td>
+                      <td>{{ record.comment }}</td>
+                      <td>{% if record.other_participants %}{% if user.organisation.organisation_type.id == 3 %}{{ record.other_participants }}{% else %}Yes{% endif %}{% else %}No{% endif %}</td>
+                  </tr>
+                  {% empty %}
+                  <tr>
+                      <td colspan="4">No reported accidents.</td>
+                  </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+      </div>
+
+
+      <div>
+        <h1>Offences associated with this vehicle:</h1>
+    
+        <table>
+            <thead>
+                <tr>
+                  <th><h2>#</h2></th>
+                  <th><h2>Date</h2></th>
+                  <th><h2>Offence</h2></th>
+                  <th><h2>Details</h2></th>
+                    {% if user.organisation.organisation_type.id == 3 %}
+                  <th><h2>Punishment</h2></th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in vehicle.policerecord_set.all %}
+                <tr {% if forloop.counter|divisibleby:2 %}class="maroon-row"{% else %}class="blue-row"{% endif %}>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ record.record_date|date:"d-m-Y" }}</td>
+                    <td>{{ record.breach_type_id.breach_type_title }}</td>
+                    <td>{% if record.comment %}{{ record.comment }}{% endif %}</td>
+                    {% if user.organisation.organisation_type.id == 3 %}
+                    <td>{{ record.punishment_type_id.punishment_type_title }}</td>
+                    {% endif %}
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="{% if user.organisation.organisation_type.id == 3 %}5{% else %}4{% endif %}">No reported offences.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
             <div>
               <h1>Maintenance records:</h1>

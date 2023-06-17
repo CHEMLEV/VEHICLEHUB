@@ -166,4 +166,8 @@ table th {
   text-align: left;
 }
 
+table tbody tr:hover {
+  background-color: #c54d4d;
+}
+
 
