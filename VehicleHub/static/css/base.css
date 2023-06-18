@@ -183,6 +183,7 @@ body {
 }
 
 .report-table tbody tr:hover {
+  outline: 3px solid #000;
   background-color: rgb(250, 201, 109);
 }
 
@@ -236,16 +237,16 @@ body {
 .plates, .no-plates {
   display: inline-block;
   vertical-align: middle;
-  min-width: 10%;
+  width: 130px;
   text-align: center;
 }
 
 .search-logo {
   display: inline-block;
   vertical-align: middle;
-  min-width: 10%;
-  white-space: nowrap; /* Ensures the content does not wrap to a new line */
-  text-align: center; /* Horizontally aligns the content in the middle */
+  width: 100px;
+  white-space: nowrap; 
+  text-align: center; 
 }
 
 .search-logo img {
@@ -256,18 +257,31 @@ body {
 .search-make-model{
   display: inline-block;
   vertical-align: middle;
-  min-width: 13%;
+  min-width: 180px;
 }
 
 
 .search-vin {
     display: inline-block;
     vertical-align: middle;
-    min-width: 13%;
+    min-width: 340px;
 }
 
-.search-line :hover {
-  background-color:rgb(201, 199, 199);
+
+.search-line {
+  display: inline-block;
+  white-space: nowrap;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 0px;
+}
+
+.search-line h2 {
+  margin: 0; 
+}
+
+.search-line:hover:not(a) {
+  border: 3px solid #000; 
 }
 
 
@@ -277,7 +291,7 @@ body {
 }
 
 .report-line .reoprt-logo {
-  margin-right: 10px; /* Adjust the margin as needed */
+  margin-right: 10px; 
 }
 
 .plates-report {

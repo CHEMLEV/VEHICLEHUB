@@ -9,25 +9,23 @@
 
 <div class="report-line-container">
   <h1>
-    {% with last_record=vehicle.numberplate_set.last %}
-    <br>
+    
     REPORT FOR
-    {% if last_record.new_plates %}
-    <div class="plates-report">{{ last_record.new_plates }}</div>
-    {% endif %}
-    {% endwith %}
+    
+    
     <div class="report-line">
       <div class="report-logo">
         <img src="{% static 'images/' %}{{ vehicle.brand.logo_url }}" height="70px" padding="20px" alt="Brand Logo">
       </div>
       <div class="report-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
+      {% with last_record=vehicle.numberplate_set.last %}
+      {% if last_record.new_plates %}
+    <div class="plates-report">{{ last_record.new_plates }}</div>
+    {% endif %}
+    {% endwith %}
     </div>
   </h1>
 </div>
-<br>
-
-
-
 
       <h1>
       General information: 
