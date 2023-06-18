@@ -32,17 +32,23 @@
     
     {% if user.organisation.organisation_type_id == 3 or user.organisation.organisation_type_id == 4 %}
     
-        <div class="report_search">
-            <h2><a href="{% url 'report_details' vehicle.pk %}"> {{ forloop.counter }}.
+    <div class="report_search">
+        
+        <div class="search-line">
+            <h2><a href="{% url 'report_details' vehicle.pk %}">
+                <div class="counter">{{ forloop.counter }}.</div> 
                 {% if vehicle.numberplates %}
                     <div class="plates">{{ vehicle.numberplates }}</div>
+                {% else %}
+                    <div class="no-plates"></div>
                 {% endif %}
-                {{ vehicle.make }}  {{ vehicle.model }}
-                VIN: {{ vehicle.VIN }}
-                REG USER: {{ vehicle.registered_owner_user_id }}
-                <br>
+                <div class="search-logo"><img src="{% static 'images/' %}{{ vehicle.brand.logo_url }}" height="70px" padding="20px" alt="Brand Logo"></div>
+                <div class="search-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
+                <div class="search-vin">VIN: {{ vehicle.VIN }}</div>                
             </a></h2>
         </div>
+        
+    
     {% endif %}
 
     {% if user.organisation.organisation_type_id == 7 and vehicle.registered_owner_user_id.id == user.id %}

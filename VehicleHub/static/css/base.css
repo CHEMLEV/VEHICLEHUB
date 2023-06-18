@@ -84,7 +84,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-left: 30px;
+  padding-left: 30px; 
 }
 
 .search-input-wrapper {
@@ -133,14 +133,26 @@ body {
   padding: 5px;
   border-radius: 5px;
   font-size: 30px;
+  font-weight: bold;
+}
+
+.no-plates {
+  
+  display: inline-block;
+  padding: 9px;
+  border-radius: 5px;
+  font-size: 30px;
 }
 
 .plates-report {
-  border: 8px solid black;
-  display: inline-block;
+  border: 6px solid black;
   padding: 10px;
   border-radius: 10px;
-  font-size: 60px;
+  font-size: 40px;
+  margin: 15px;
+  margin-left: 25px;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .icon {
@@ -155,19 +167,127 @@ body {
   background-color: rgb(231, 214, 214);
 }
 
-table td {
+.report-table td {
   padding: 5px;
   padding-left: 10px;
+  border: 1px solid black;
+  padding: 10px;
+
 }
 
-table th {
+.report-table th {
   padding-left: 10px;
   padding-right: 30px;
   text-align: left;
+  border: 1px solid black;
 }
 
-table tbody tr:hover {
-  background-color: #c54d4d;
+.report-table tbody tr:hover {
+  background-color: rgb(250, 201, 109);
+}
+
+.report-table {
+  
+  width: 100%;
+  border: 1px solid black;
+}
+
+.logo-request-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-info {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.logo-info img {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.text-info {
+  display: inline;
+  vertical-align: middle;
+}
+
+.report_search table {
+  width: 70%;
+  border-collapse: collapse;
+}
+
+.report_search td {
+  padding: 10px;
+}
+
+.report_search tr {
+  margin: 0;
+}
+
+.counter{
+  display: inline-block;
+  vertical-align: middle;
+  min-width: 2%;
+}
+
+.plates, .no-plates {
+  display: inline-block;
+  vertical-align: middle;
+  min-width: 10%;
+  text-align: center;
+}
+
+.search-logo {
+  display: inline-block;
+  vertical-align: middle;
+  min-width: 10%;
+  white-space: nowrap; /* Ensures the content does not wrap to a new line */
+  text-align: center; /* Horizontally aligns the content in the middle */
+}
+
+.search-logo img {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.search-make-model{
+  display: inline-block;
+  vertical-align: middle;
+  min-width: 13%;
 }
 
 
+.search-vin {
+    display: inline-block;
+    vertical-align: middle;
+    min-width: 13%;
+}
+
+.search-line :hover {
+  background-color:rgb(201, 199, 199);
+}
+
+
+.report-line {
+  display: flex;
+  align-items: center;
+}
+
+.report-line .reoprt-logo {
+  margin-right: 10px; /* Adjust the margin as needed */
+}
+
+.plates-report {
+  display: inline-block;
+}
+
+
+
+.report-line, .report-logo, .report-make-model  {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 5px;
+}

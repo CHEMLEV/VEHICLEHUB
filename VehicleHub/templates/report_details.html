@@ -6,29 +6,38 @@
 
 {% if user.is_authenticated %}
 
-<h1>
 
-{% with last_record=vehicle.numberplate_set.last %}
-      REPORT FOR
-      {% if last_record.new_plates %}
-      <div class="plates-report">{{ last_record.new_plates }} </div>
-      {% endif %}
-      {% endwith %}
-      <br><br>
-</h1>
- 
-  <div><h1>    
+<div class="report-line-container">
+  <h1>
+    {% with last_record=vehicle.numberplate_set.last %}
+    <br>
+    REPORT FOR
+    {% if last_record.new_plates %}
+    <div class="plates-report">{{ last_record.new_plates }}</div>
+    {% endif %}
+    {% endwith %}
+    <div class="report-line">
+      <div class="report-logo">
+        <img src="{% static 'images/' %}{{ vehicle.brand.logo_url }}" height="70px" padding="20px" alt="Brand Logo">
+      </div>
+      <div class="report-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
+    </div>
+  </h1>
+</div>
+<br>
 
+
+
+
+      <h1>
       General information: 
-</h1>
-    <h3>       
-              
-      VIN: {{vehicle.VIN}}
+      </h1>
+      
+      <h3>
+       Year: {{vehicle.year}}
+       <br>       
+       VIN: {{vehicle.VIN}}
       <br>
-      Make: {{vehicle.make}}
-       <br>
-       Model: {{vehicle.model}}
-       <br> 
        {% if vehicle.fuel != null %}
        Fuel: {{vehicle.fuel}}
        <br>
@@ -54,7 +63,7 @@
     Customs information:  </h1>
     <h3>
       Customs clearance date:    
-      {{ vehicle.customsrecord.record_date }}
+      {{ vehicle.customsrecord.record_date|date:"d-m-Y" }}
       <br>
       
       Mileage at clearance: 
@@ -84,12 +93,12 @@
     Owhership records:  </h1>
     <h3>
       Total number of owners:    
-      {{ vehicle.ownerships.all.count }}<br>
+      {{ vehicle.ownerships.all.count }}<br><br>
 
       Ownership change dates and mileage:  <br>  
       {% for ownership in vehicle.ownerships.all %}
       {{ forloop.counter }}. 
-    {{ ownership.record_date }} at {{ ownership.mileage }} km{% if user.organisation.organisation_type.id == 3 %}. Owner: {{ ownership.new_owner }} {% endif %}<br>
+    {{ ownership.record_date|date:"d-m-Y" }} at {{ ownership.mileage }} km{% if user.organisation.organisation_type.id == 3 %}. Owner: {{ ownership.new_owner }} {% endif %}<br>
   {% endfor %}
                     
        </h3>
@@ -99,7 +108,7 @@
   <div><h1>Plates that the vehicle ever had:</h1>
 
   <h3> {% for record in vehicle.numberplate_set.all %}
-        {{ record.new_plates }} issued on {{ record.record_date}} at {{record.mileage}} km <br>
+        {{ record.new_plates }} issued on {{ record.record_date|date:"d-m-Y"}} at {{record.mileage}} km <br>
         {% empty %}
         No plates were ever issued for this the vehicle.
     {% endfor %}</h3>
@@ -111,8 +120,8 @@
 
       <h3>
         {% for record in vehicle.financerecord_set.all %}
-        {{ forloop.counter }}. Provided by {{ record.user_id.organisation }}. Commencement date: {{ record.record_date }}. Maturity date: {{ record.expiry_date }}.
-        {% if record.actual_completion_date %}
+        {{ forloop.counter }}. Provided by {{ record.user_id.organisation }}. Commencement date: {{ record.record_date|date:"d-m-Y" }}. Maturity date: {{ record.expiry_date|date:"d-m-Y" }}.
+        {% if record.actual_completion_date|date:"d-m-Y" %}
             Repaid in full.
         {% else %}
             Not yet repaid.
@@ -129,7 +138,15 @@
         <div>
           <h1>Accidents this vehicle was involved:</h1>
       
-          <table>
+          <table class="report-table">
+            <colgroup>
+              <col style="width: 4%;">
+              <col style="width: 8%;">
+              <col style="width: 8%;">
+              <col style="width: 40%;">
+              <col style="width: 40%;">
+              
+          </colgroup>
               <thead>
                   <tr>
                     <th><h2>#</h2></th>
@@ -161,7 +178,15 @@
       <div>
         <h1>Offences associated with this vehicle:</h1>
     
-        <table>
+        <table class="report-table">
+          <colgroup>
+            <col style="width: 4%;">
+            <col style="width: 8%;">
+            <col style="width: 8%;">
+            <col style="width: 40%;">
+            <col style="width: 40%;">
+            
+        </colgroup>
             <thead>
                 <tr>
                   <th><h2>#</h2></th>
@@ -196,7 +221,16 @@
             <div>
               <h1>Maintenance records:</h1>
           
-              <table>
+              <table class="report-table">
+                <colgroup>
+                <col style="width: 4%;">
+                <col style="width: 8%;">
+                <col style="width: 8%;">
+                <col style="width: 20%;">
+                <col style="width: 20%;">
+                <col style="width: 20%;">
+                <col style="width: 20%;">
+            </colgroup>
                   <thead>
                       <tr>
                           <th><h2>#</h2></th>

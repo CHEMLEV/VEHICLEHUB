@@ -26,12 +26,20 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+    
+
+class VehicleMake(models.Model):
+    brand = models.TextField(max_length=30, null=False)
+    logo_url = models.URLField(max_length=200, null=True, blank=True)
+
+    def __str__(self):
+        return self.brand
 
 
 class Vehicle(models.Model):
     VIN = models.TextField(max_length=20, null=False)
     year = models.IntegerField(null=False)
-    make = models.TextField(max_length=20, null=False)
+    brand = models.ForeignKey(VehicleMake, on_delete=models.CASCADE)
     model = models.TextField(max_length=20, null=False)
     fuel = models.TextField(max_length=20, null=False)
     output = models.IntegerField(null=False)
