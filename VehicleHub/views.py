@@ -151,13 +151,6 @@ class SearchEditDetailsView(DetailView):
     template_name = "search_edit_details.html"
 
 
-class VehicleCreateView(LoginRequiredMixin, CreateView):  # new 
-    model = Vehicle
-    template_name = "vehicle_new.html"
-    fields = ("VIN", "year", "make", "model", "fuel", "output", "drivetrain", "trim_line")
-    success_url = reverse_lazy('report')
-
-
 class VehicleUpdateView(UpdateView): #LoginRequiredMixin, UserPassesTestMixin, 
     model = Vehicle
     fields = '__all__'
@@ -306,6 +299,103 @@ class MaintenanceRecordUpdateView(UpdateView):
         return obj.developer == self.request.user
 
 
+class VehicleCreateView(LoginRequiredMixin, CreateView):  # new 
+    model = Vehicle
+    template_name = "record_new.html"
+    fields = '__all__'
+    #fields = ("VIN", "year", "make", "model", "fuel", "output", "drivetrain", "trim_line")
+    success_url = reverse_lazy('add_record_types')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_model'] = ' Vehicle'
+        return context
+
+
+class CustomsRecordCreateView(LoginRequiredMixin, CreateView):  # new 
+    model = CustomsRecord
+    template_name = "record_new.html"
+    fields = '__all__'
+    success_url = reverse_lazy('add_record_types')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_model'] = ' CustomsRecord'
+        return context
+
+
+class OwnershipCreateView(LoginRequiredMixin, CreateView):  # new 
+    model = Ownership
+    template_name = "record_new.html"
+    fields = '__all__'
+    success_url = reverse_lazy('add_record_types')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_model'] = ' Ownership'
+        return context
+
+
+class NumberPlateCreateView(LoginRequiredMixin, CreateView):  # new 
+    model = NumberPlate
+    template_name = "record_new.html"
+    fields = '__all__'
+    success_url = reverse_lazy('add_record_types')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_model'] = ' NumberPlate'
+        return context
+
+
+class FinanceRecordCreateView(LoginRequiredMixin, CreateView):  # new 
+    model = FinanceRecord
+    template_name = "record_new.html"
+    fields = '__all__'
+    success_url = reverse_lazy('add_record_types')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_model'] = ' FinanceRecord'
+        return context
+
+
+class AccidentRecordCreateView(LoginRequiredMixin, CreateView):  # new 
+    model = AccidentRecord
+    template_name = "record_new.html"
+    fields = '__all__'
+    success_url = reverse_lazy('add_record_types')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_model'] = ' AccidentRecord'
+        return context
+
+
+class PoliceRecordCreateView(LoginRequiredMixin, CreateView):  # new 
+    model = PoliceRecord
+    template_name = "record_new.html"
+    fields = '__all__'
+    success_url = reverse_lazy('add_record_types')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_model'] = ' PoliceRecord'
+        return context
+
+
+class MaintenanceRecordCreateView(LoginRequiredMixin, CreateView):  # new 
+    model = MaintenanceRecord
+    template_name = "record_new.html"
+    fields = '__all__'
+    success_url = reverse_lazy('add_record_types')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_model'] = ' MaintenanceRecord'
+        return context
+
+
 class VehicleDeleteView(DeleteView): #LoginRequiredMixin, UserPassesTestMixin, 
     model = Vehicle
     fields = (
@@ -313,7 +403,7 @@ class VehicleDeleteView(DeleteView): #LoginRequiredMixin, UserPassesTestMixin,
         "year",
     )
     template_name = "vehicle_delete.html"
-    success_url = reverse_lazy('report')
+    success_url = reverse_lazy('manage_records')
 
     def test_func(self):  # new
         obj = self.get_object()
