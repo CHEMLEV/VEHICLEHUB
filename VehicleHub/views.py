@@ -3,7 +3,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .forms import RegisterForm
 from django.contrib.auth import authenticate, login
-from .models import Organisation, Vehicle
+from .models import (
+    Organisation, Vehicle, CustomsRecord, Ownership, NumberPlate, FinanceRecord, 
+    PoliceRecord, AccidentRecord, MaintenanceRecord )
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
@@ -85,16 +87,13 @@ def manage_records_view(request):
 def add_record_types_view(request):
     return render(request, 'add_record_types.html')
 
-def search_edit_record_types_view(request):
-    return render(request, 'search_edit_record_types.html')
-
 
 def HomePageView(request):
     return render (request, 'home.html') 
 
 
 
-def vehicle_filter_list(request):
+def vehicle_filter_list(request, template_name):
     
     vehicles = Vehicle.objects.all()
 
@@ -113,7 +112,7 @@ def vehicle_filter_list(request):
         'vehicleFilter': vehicleFilter
     }
 
-    return render(request, 'request_report.html', context)
+    return render(request, template_name, context)
 
 # Vehicles
 class VehiclesListView(ListView):
@@ -122,16 +121,34 @@ class VehiclesListView(ListView):
 
     def get(self, request, *args, **kwargs):
         view = views.vehicle_filter_list
-        return view(request, *args, **kwargs)
+        return view(request, "request_report.html", *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         view = views.vehicle_filter_list
-        return view(request, *args, **kwargs)
+        return view(request, "request_report.html", *args, **kwargs)
     
 
 class VehicleDetailsView(DetailView): 
     model = Vehicle
     template_name = "report_details.html"
+
+
+class SearchEditListView(ListView):
+    model = Vehicle
+    template_name = "search_edit.html"
+
+    def get(self, request, *args, **kwargs):
+        view = views.vehicle_filter_list
+        return view(request, "search_edit.html", *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        view = views.vehicle_filter_list
+        return view(request, "search_edit.html", *args, **kwargs)
+    
+
+class SearchEditDetailsView(DetailView): 
+    model = Vehicle
+    template_name = "search_edit_details.html"
 
 
 class VehicleCreateView(LoginRequiredMixin, CreateView):  # new 
@@ -143,11 +160,146 @@ class VehicleCreateView(LoginRequiredMixin, CreateView):  # new
 
 class VehicleUpdateView(UpdateView): #LoginRequiredMixin, UserPassesTestMixin, 
     model = Vehicle
-    fields = (
-        "VIN", "year", "make", "model", "fuel", "output", "drivetrain", "trim_line"
-    )
-    template_name = "vehicle_edit.html"
-    success_url = reverse_lazy('report')
+    fields = '__all__'
+    #fields = (
+    #    "VIN", "year", "model", "fuel", "output", "drivetrain", "trim_line", "registered_owner_user_id", "brand"
+    #)
+    template_name = "record_edit.html"
+    success_url = reverse_lazy('search_edit_details')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_model'] = self.kwargs.get('plate') + ' CustomsRecord'
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('search_edit_details', kwargs={'pk': self.object.pk})
+
+    def test_func(self):  # new
+        obj = self.get_object()
+        return obj.developer == self.request.user
+
+
+class CustomsRecordUpdateView(UpdateView):  
+    model = CustomsRecord
+    fields = '__all__'
+    template_name = "record_edit.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_model'] = self.kwargs.get('plate') + ' CustomsRecord'
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('search_edit_details', kwargs={'pk': self.object.pk})
+
+    def test_func(self):  # new
+        obj = self.get_object()
+        return obj.developer == self.request.user
+
+
+class OwnershipUpdateView(UpdateView):  
+    model = Ownership
+    fields = '__all__'
+    template_name = "record_edit.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_model'] = self.kwargs.get('plate') + ' Ownership'
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('search_edit_details', kwargs={'pk': self.kwargs.get('vehicle_pk')})
+
+    def test_func(self):  # new
+        obj = self.get_object()
+        return obj.developer == self.request.user
+
+
+class NumberPlateUpdateView(UpdateView):  
+    model = NumberPlate
+    fields = '__all__'
+    template_name = "record_edit.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_model'] = self.kwargs.get('plate') + ' NumberPlate'
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('search_edit_details', kwargs={'pk': self.kwargs.get('vehicle_pk')})
+
+    def test_func(self):  # new
+        obj = self.get_object()
+        return obj.developer == self.request.user
+
+
+class FinanceRecordUpdateView(UpdateView):  
+    model = FinanceRecord
+    fields = '__all__'
+    template_name = "record_edit.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_model'] = self.kwargs.get('plate') + ' FinanceRecord'
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('search_edit_details', kwargs={'pk': self.kwargs.get('vehicle_pk')})
+
+    def test_func(self):  # new
+        obj = self.get_object()
+        return obj.developer == self.request.user
+
+
+class AccidentRecordUpdateView(UpdateView):  
+    model = AccidentRecord
+    fields = '__all__'
+    template_name = "record_edit.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_model'] = self.kwargs.get('plate') + ' AccidentRecord'
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('search_edit_details', kwargs={'pk': self.kwargs.get('vehicle_pk')})
+
+    def test_func(self):  # new
+        obj = self.get_object()
+        return obj.developer == self.request.user
+
+
+class PoliceRecordUpdateView(UpdateView):  
+    model = PoliceRecord
+    fields = '__all__'
+    template_name = "record_edit.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_model'] = self.kwargs.get('plate') + ' PoliceRecord'
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('search_edit_details', kwargs={'pk': self.kwargs.get('vehicle_pk')})
+
+    def test_func(self):  # new
+        obj = self.get_object()
+        return obj.developer == self.request.user
+
+
+class MaintenanceRecordUpdateView(UpdateView):  
+    model = MaintenanceRecord
+    fields = '__all__'
+    template_name = "record_edit.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_model'] = self.kwargs.get('plate') + ' MaintenanceRecord'
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('search_edit_details', kwargs={'pk': self.kwargs.get('vehicle_pk')})
 
     def test_func(self):  # new
         obj = self.get_object()

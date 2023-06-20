@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+<h1>Search a vehicle by plates or/and VIN to edit </h1>
+<br>
+
+
+<img src="{% static 'images/coupe.jpg' %}" height="60px" style="padding-left: 40px; padding-right: 40px; border-bottom: 4px solid black;">
+
+<form class="search-form" method="POST">
+    {% csrf_token %}
+
+    {{ vehicleFilter.form.as_p }}
+    
+    <div class="auth_link">
+        <button type="submit" class="auth-button">SEARCH</button>
+    </div>
+</form>
+
+<br />
+
+
+
+{% if vehicleFilter.form.is_bound and vehicleFilter.qs %}
+    <h1>Search results:</h1>
+    {% for vehicle in vehicleFilter.qs %}
+    
+    {% if user.organisation.organisation_type_id == 3 or user.organisation.organisation_type_id == 4 %}
+    
+    <div class="report_search">
+        
+        <div class="search-line">
+            <h2><a href="{% url 'search_edit_details' vehicle.pk %}">
+                <div class="counter">{{ forloop.counter }}.</div> 
+                {% if vehicle.numberplates %}
+                    <div class="plates">{{ vehicle.numberplates }}</div>
+                {% else %}
+                    <div class="no-plates"></div>
+                {% endif %}
+                <div class="search-logo"><img src="{% static 'images/' %}{{ vehicle.brand.logo_url }}" height="70px" padding="20px" alt="Brand Logo"></div>
+                <div class="search-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
+                <div class="search-vin">VIN: {{ vehicle.VIN }}</div>                
+            </a></h2>
+        </div>
+        
+    
+    {% endif %}
+
+    {% endfor %}
+{% elif vehicleFilter.form.is_bound %}
+    <h2>No results found</h2>
+{% endif %}
+
+
+{% endif %} 
+
+{% endblock content %}
+    

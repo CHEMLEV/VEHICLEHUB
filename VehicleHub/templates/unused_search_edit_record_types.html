@@ -4,20 +4,41 @@
 
 {% block content %}
 <br>
-<center><h2>PLESASE CHOOSE ONE OF THE FOLLOWING OPTIONS</h2>
+<center><h2>PLESASE CHOOSE ONE OF THE FOLLOWING OPTIONS FOR</h2>
+
+    <div class="report-line-container">
+        <h1>
+          
+          <div class="report-line">
+            <div class="report-logo">
+              <img src="{% static 'images/' %}{{ vehicle.brand.logo_url }}" height="70px" padding="20px" alt="Brand Logo">
+            </div>
+            <div class="report-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
+            {% with last_record=vehicle.numberplate_set.last %}
+            {% if last_record.new_plates %}
+          <div class="plates-report">{{ last_record.new_plates }}</div>
+          {% endif %}
+          {% endwith %}
+          </div>
+        </h1>
+      </div>
+      
 <br>
-        <a href="{% url 'vehicle_new' %}">
+        <a href="{% url 'vehicle_edit' vehicle.pk %}">
         <img class="icon"src="{% static 'images/record_search_edit.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
         </a>
         <br>
     
         <div class="auth_link" style="position: relative;">
-            <a href="{% url 'vehicle_new' %}" class="auth-button"> SEARCH/EDIT VEHICLE RECORD</a>
+            <a href="{% url 'vehicle_edit' vehicle.pk %}" class="auth-button"> SEARCH/EDIT VEHICLE RECORD</a>
         </div><br>
 
-        <h2> OR <br></h2>
-
-        <a href="{% url 'request_report' %}">
+        {% if vehicle.numberplate_set.last.new_plates %}
+            <a href="{% url 'CustomsRecord_edit' vehicle.pk vehicle.numberplate_set.last.new_plates %}">
+        {% else %}
+            <a href="{% url 'CustomsRecord_edit' vehicle.pk ' ' %}">
+        {% endif %}
+    
             <img class="icon" src="{% static 'images/record_search_edit.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
             </a>
             <br>
@@ -32,8 +53,14 @@
         <br>
         <br>
 
-        <a href="{% url 'vehicle_new' %}">
-            <img class="icon" src="{% static 'images/record_search_edit.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
+
+        {% if vehicle.numberplate_set.last.new_plates %}
+            <a href="{% url 'Ownership_edit' vehicle.pk vehicle.numberplate_set.last.new_plates %}">
+        {% else %}
+            <a href="{% url 'Ownership_edit' vehicle.pk ' ' %}">
+        {% endif %}
+
+        <img class="icon" src="{% static 'images/record_search_edit.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
             </a>
             <br>
         
@@ -42,8 +69,7 @@
                 
             </div><br>
 
-            <h2> OR <br></h2>
-    
+            
             <a href="{% url 'request_report' %}">
                 <img class="icon" src="{% static 'images/record_search_edit.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
                 </a>
@@ -84,8 +110,6 @@
                     <div class="auth_link" style="position: relative;">
                         <a href="{% url 'vehicle_new' %}" class="auth-button"> SEARCH/EDIT OFFENCE RECORD</a>
                     </div><br>
-
-                    <h2> OR <br></h2>
 
                     <a href="{% url 'vehicle_new' %}">
                         <img class="icon" src="{% static 'images/record_search_edit.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
