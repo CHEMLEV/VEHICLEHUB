@@ -15,22 +15,30 @@
 
 <center style="margin-top: 100px"> <img src="{% static 'images/logo1.jpg' %}" alt="logo-image" height="120" ><br><br><center>
 
-    <form style="margin-top: 20px; width: 500px;" action="{% url 'login' %}" method="post">
-        {% csrf_token %}
-        <label for="id_email">Email:</label>
-        <input type="email" name="email" id="id_email" required>
-        <br><br>
-        <label for="id_password">Password:</label>
-        <input type="password" name="password" id="id_password" required>
-        <br><br>
-        <h5 class="base-text">
-          <div class="centered-button">
-            <div class="auth_link">
-              <button type="submit" class="auth-button">LOG IN</button>
-            </div>
-          </div>
-        </h5>
-      </form>
+  <form class="input-form" style="margin-top: 20px; width: 300px;" action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    <label for="id_email" style="text-align: left; display: flex; align-self: flex-start; width: 100%; padding: 5px">Email:</label>
+    <input type="email" class="input-field" name="email" id="id_email" required style="width: 100%;">
+    <br>
+    <label for="id_password" style="text-align: left; display: flex; align-self: flex-start; width: 100%; padding: 5px">Password:</label>
+    <input type="password" class="input-field" name="password" id="id_password" required style="width: 100%;  background-color: white;">
+    <br><br>
+    <h5 class="base-text">
+      <div class="centered-button">
+        <div class="auth_link">
+          <button type="submit" class="auth-button">LOG IN</button>
+        </div>
+      </div>
+    </h5>
+  </form>
+ 
+  
+  
+  
+  
+  
+  
+  
       
     
 
