@@ -305,3 +305,25 @@ body {
   vertical-align: middle;
   margin: 5px;
 }
+
+  .input-form {
+    width: 400px;
+    margin-bottom: 10px;
+  }
+
+  .input-form textarea,
+  .input-form input[type="text"],
+  .input-form input[type="password"],
+  .input-form input[type="email"],
+  .input-form select,
+  .input-form input[type="number"],
+  .input-form input[type="checkbox"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 60px;
+  }
+
+  
