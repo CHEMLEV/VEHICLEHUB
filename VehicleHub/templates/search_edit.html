@@ -6,13 +6,13 @@
 
 {% if user.is_authenticated %}
 
-<h1>Search a vehicle by plates or/and VIN to edit </h1>
+<h1>Search a vehicle record by VIN or/and number plates to edit </h1>
 <br>
 
 
-<img src="{% static 'images/coupe.jpg' %}" height="60px" style="padding-left: 40px; padding-right: 40px; border-bottom: 4px solid black;">
+<img src="{% static 'images/record_search_edit.png' %}" height="60px" style="padding-left: 40px; padding-right: 40px;">
 
-<form class="search-form" method="POST">
+<form class="input-form" method="POST">
     {% csrf_token %}
 
     {{ vehicleFilter.form.as_p }}
@@ -24,8 +24,6 @@
 
 <br />
 
-
-
 {% if vehicleFilter.form.is_bound and vehicleFilter.qs %}
     <h1>Search results:</h1>
     {% for vehicle in vehicleFilter.qs %}
@@ -35,16 +33,16 @@
     <div class="report_search">
         
         <div class="search-line">
-            <h2><a href="{% url 'search_edit_details' vehicle.pk %}">
+            <h2><a href="{% url 'vehicle_edit' vehicle.pk ' ' %}">
                 <div class="counter">{{ forloop.counter }}.</div> 
                 {% if vehicle.numberplates %}
                     <div class="plates">{{ vehicle.numberplates }}</div>
                 {% else %}
                     <div class="no-plates"></div>
                 {% endif %}
-                <div class="search-logo"><img src="{% static 'images/' %}{{ vehicle.brand.logo_url }}" height="70px" padding="20px" alt="Brand Logo"></div>
                 <div class="search-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
-                <div class="search-vin">VIN: {{ vehicle.VIN }}</div>                
+                <div class="search-vin">VIN: {{ vehicle.VIN }}</div> 
+                
             </a></h2>
         </div>
         
@@ -54,6 +52,67 @@
     {% endfor %}
 {% elif vehicleFilter.form.is_bound %}
     <h2>No results found</h2>
+
+
+
+
+
+    
+{% endif %}
+
+
+<h1>Search a customs record by vehicle's VIN or/and number plates to edit </h1>
+<br>
+
+
+<img src="{% static 'images/record_search_edit.png' %}" height="60px" style="padding-left: 40px; padding-right: 40px;">
+
+<form class="input-form" method="POST">
+    {% csrf_token %}
+
+    {{ vehicleFilter.form.as_p }}
+    
+    <div class="auth_link">
+        <button type="submit" class="auth-button">SEARCH</button>
+    </div>
+</form>
+
+<br />
+
+{% if vehicleFilter.form.is_bound and vehicleFilter.qs %}
+<h1>Search results:</h1>
+{% for vehicle in vehicleFilter.qs %}
+
+{% if user.organisation.organisation_type_id == 3 or user.organisation.organisation_type_id == 4 %}
+
+<div class="report_search">
+
+    <div class="search-line">
+        {% if vehicle.customsrecord %}
+        <h2><a href="{% url 'CustomsRecord_edit' vehicle.customsrecord.pk  %}">
+            <div class="counter">{{ forloop.counter }}.</div>
+            {% if vehicle.numberplates %}
+                <div class="plates">{{ vehicle.numberplates }}</div>
+            {% else %}
+                <div class="no-plates"></div>
+            {% endif %}
+            <div class="search-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
+            <div class="search-vin">VIN: {{ vehicle.VIN }}</div>            
+
+        </a></h2>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+{% elif vehicleFilter.form.is_bound %}
+    <h2>No results found</h2>
+
+
+
+
+
+    
 {% endif %}
 
 

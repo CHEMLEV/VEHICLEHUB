@@ -231,7 +231,7 @@ body {
 .counter{
   display: inline-block;
   vertical-align: middle;
-  min-width: 2%;
+  width: 50px;
 }
 
 .plates, .no-plates {
@@ -252,19 +252,21 @@ body {
 .search-logo img {
   display: inline-block;
   vertical-align: middle;
+  margin-left: 20px;
 }
 
 .search-make-model{
   display: inline-block;
   vertical-align: middle;
-  min-width: 180px;
+  width: 220px;
+  margin-left: 30px;
 }
 
 
 .search-vin {
     display: inline-block;
     vertical-align: middle;
-    min-width: 340px;
+    width: 340px;
 }
 
 
@@ -329,7 +331,7 @@ body {
     margin-top: 5px;
     margin-bottom: 10px;
     height: 40px;    
-    border-radius: 5px;
+    border: solid black 3px;
   }
 
   

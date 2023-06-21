@@ -151,12 +151,11 @@ class SearchEditDetailsView(DetailView):
     template_name = "search_edit_details.html"
 
 
-class VehicleUpdateView(UpdateView): #LoginRequiredMixin, UserPassesTestMixin, 
+
+
+class VehicleUpdateView(UpdateView):
     model = Vehicle
-    fields = '__all__'
-    #fields = (
-    #    "VIN", "year", "model", "fuel", "output", "drivetrain", "trim_line", "registered_owner_user_id", "brand"
-    #)
+    fields = ['year', 'brand', 'model', 'fuel', 'output', 'drivetrain', 'trim_line', 'registered_owner_user_id']
     template_name = "record_edit.html"
     success_url = reverse_lazy('search_edit_details')
 
@@ -166,11 +165,16 @@ class VehicleUpdateView(UpdateView): #LoginRequiredMixin, UserPassesTestMixin,
         return context
 
     def get_success_url(self):
-        return reverse_lazy('search_edit_details', kwargs={'pk': self.object.pk})
+        return reverse_lazy('ui')
 
-    def test_func(self):  # new
+    def test_func(self):
         obj = self.get_object()
         return obj.developer == self.request.user
+    
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['registered_owner_user_id'].required = False
+        return form
 
 
 class CustomsRecordUpdateView(UpdateView):  
@@ -180,15 +184,15 @@ class CustomsRecordUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['my_model'] = self.kwargs.get('plate') + ' CustomsRecord'
+        context['my_model'] = f"{self.object} CustomsRecord"
         return context
 
     def get_success_url(self):
-        return reverse_lazy('search_edit_details', kwargs={'pk': self.object.pk})
+        return reverse_lazy('ui')
 
-    def test_func(self):  # new
+    def test_func(self):
         obj = self.get_object()
-        return obj.developer == self.request.user
+        return obj.user_id == self.request.user 
 
 
 class OwnershipUpdateView(UpdateView):  
@@ -299,29 +303,37 @@ class MaintenanceRecordUpdateView(UpdateView):
         return obj.developer == self.request.user
 
 
-class VehicleCreateView(LoginRequiredMixin, CreateView):  # new 
+class VehicleCreateView(LoginRequiredMixin, CreateView):
     model = Vehicle
     template_name = "record_new.html"
     fields = '__all__'
-    #fields = ("VIN", "year", "make", "model", "fuel", "output", "drivetrain", "trim_line")
     success_url = reverse_lazy('add_record_types')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['my_model'] = ' Vehicle'
+        context['my_model'] = 'vehicle'
         return context
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['registered_owner_user_id'].required = False 
+        return form
 
-class CustomsRecordCreateView(LoginRequiredMixin, CreateView):  # new 
+
+class CustomsRecordCreateView(LoginRequiredMixin, CreateView):
     model = CustomsRecord
     template_name = "record_new.html"
-    fields = '__all__'
+    fields = ["vehicle_id", "record_date", "import_as", "damaged", "mileage", "country_of_origin"]  
     success_url = reverse_lazy('add_record_types')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['my_model'] = ' CustomsRecord'
+        context['my_model'] = 'customs'
         return context
+
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user.id
+        return super().form_valid(form)
 
 
 class OwnershipCreateView(LoginRequiredMixin, CreateView):  # new 
@@ -332,8 +344,17 @@ class OwnershipCreateView(LoginRequiredMixin, CreateView):  # new
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['my_model'] = ' Ownership'
+        context['my_model'] = 'ownership'
         return context
+    
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields.pop('user_id')
+        return form
+
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user.id
+        return super().form_valid(form)
 
 
 class NumberPlateCreateView(LoginRequiredMixin, CreateView):  # new 
@@ -344,8 +365,17 @@ class NumberPlateCreateView(LoginRequiredMixin, CreateView):  # new
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['my_model'] = ' NumberPlate'
+        context['my_model'] = 'number plates'
         return context
+    
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields.pop('user_id')
+        return form
+
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user.id
+        return super().form_valid(form)
 
 
 class FinanceRecordCreateView(LoginRequiredMixin, CreateView):  # new 
@@ -356,8 +386,17 @@ class FinanceRecordCreateView(LoginRequiredMixin, CreateView):  # new
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['my_model'] = ' FinanceRecord'
+        context['my_model'] = 'finance'
         return context
+    
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields.pop('user_id')
+        return form
+
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user.id
+        return super().form_valid(form)
 
 
 class AccidentRecordCreateView(LoginRequiredMixin, CreateView):  # new 
@@ -368,8 +407,17 @@ class AccidentRecordCreateView(LoginRequiredMixin, CreateView):  # new
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['my_model'] = ' AccidentRecord'
+        context['my_model'] = 'accident'
         return context
+    
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields.pop('user_id')
+        return form
+
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user.id
+        return super().form_valid(form)
 
 
 class PoliceRecordCreateView(LoginRequiredMixin, CreateView):  # new 
@@ -380,8 +428,17 @@ class PoliceRecordCreateView(LoginRequiredMixin, CreateView):  # new
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['my_model'] = ' PoliceRecord'
+        context['my_model'] = 'offence'
         return context
+    
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields.pop('user_id')
+        return form
+
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user.id
+        return super().form_valid(form)
 
 
 class MaintenanceRecordCreateView(LoginRequiredMixin, CreateView):  # new 
@@ -392,8 +449,17 @@ class MaintenanceRecordCreateView(LoginRequiredMixin, CreateView):  # new
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['my_model'] = ' MaintenanceRecord'
+        context['my_model'] = 'maintenance'
         return context
+    
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields.pop('user_id')
+        return form
+
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user.id
+        return super().form_valid(form)
 
 
 class VehicleDeleteView(DeleteView): #LoginRequiredMixin, UserPassesTestMixin, 

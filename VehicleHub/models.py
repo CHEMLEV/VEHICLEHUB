@@ -60,10 +60,10 @@ class CustomsRecord(models.Model):
     import_as = models.TextField(max_length=4, default="")
     damaged = models.TextField(max_length=3, default="")
     mileage = models.IntegerField(null=False)
-    country_of_origin = models.TextField(max_length=30, blank=True)
+    country_of_origin = models.TextField(max_length=30, null=False)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 class Ownership(models.Model):

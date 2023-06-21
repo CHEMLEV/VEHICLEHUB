@@ -12,7 +12,7 @@
 
 <img src="{% static 'images/coupe.jpg' %}" height="60px" style="padding-left: 40px; padding-right: 40px; border-bottom: 4px solid black;">
 
-<form class="search-form" method="POST">
+<form class="input-form" method="POST">
     {% csrf_token %}
 
     {{ vehicleFilter.form.as_p }}
