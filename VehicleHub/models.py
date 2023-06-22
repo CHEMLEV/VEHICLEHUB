@@ -54,8 +54,8 @@ class Vehicle(models.Model):
 
 class CustomsRecord(models.Model):
     
-    vehicle_id = models.OneToOneField(Vehicle, on_delete=models.CASCADE, null=True)
-    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+    vehicle_id = models.OneToOneField(Vehicle, on_delete=models.CASCADE, null=False)
+    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=False)
     record_date = models.DateField(default=datetime.now, null=False)
     import_as = models.TextField(max_length=4, default="")
     damaged = models.TextField(max_length=3, default="")
@@ -67,8 +67,8 @@ class CustomsRecord(models.Model):
 
 
 class Ownership(models.Model):
-    vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE, null=True, related_name='ownerships')
-    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+    vehicle_id = models.ForeignKey(Vehicle, on_delete=models.CASCADE, null=False)
+    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=False)
     record_date = models.DateField(default=datetime.now, null=False)
     mileage = models.IntegerField(null=False)
     new_owner = models.TextField(max_length=50, null=False)
@@ -78,14 +78,15 @@ class Ownership(models.Model):
 
 
 class NumberPlate(models.Model):
-    vehicle_id = models.ForeignKey(Vehicle, on_delete=models.CASCADE, null=True)
-    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+    vehicle_id = models.ForeignKey(Vehicle, on_delete=models.CASCADE, null=False)
+    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=False)
     record_date = models.DateField(default=datetime.now, null=False)
     mileage = models.IntegerField(null=False)
     new_plates = models.TextField(max_length=30, null=False)
 
     def __str__(self):
-        return self.id
+        return str(self.new_plates)
+
 
 
 class FinanceRecord(models.Model):
@@ -120,7 +121,7 @@ class PoliceRecord(models.Model):
     breach_type_id = models.ForeignKey(BreachType, on_delete=models.CASCADE, null=True)
     punishment_type_id = models.ForeignKey(PunishmentType, on_delete=models.CASCADE, null=True)
     due_date = models.DateField(default=datetime.now, null=False)
-    expiry_date = models.DateField(default=datetime.now, null=False)
+    expiry_date = models.DateField(default=datetime.now, null=True)
     comment = models.TextField(max_length=300, blank=True)
     
     def __str__(self):

@@ -1,5 +1,5 @@
 import django_filters
-from .models import Organisation, Vehicle, NumberPlate
+from .models import Organisation, Vehicle, NumberPlate, CustomsRecord
 from django import forms
 from django.db.models import Subquery, OuterRef
 

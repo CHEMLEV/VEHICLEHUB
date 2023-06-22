@@ -33,16 +33,15 @@
     <div class="report_search">
         
         <div class="search-line">
-            <h2><a href="{% url 'vehicle_edit' vehicle.pk ' ' %}">
-                <div class="counter">{{ forloop.counter }}.</div> 
-                {% if vehicle.numberplates %}
+            <h2><a href="{% url 'vehicle_edit' vehicle.pk ' ' %}">                
+                    
+                    {% if vehicle.numberplates %}
                     <div class="plates">{{ vehicle.numberplates }}</div>
                 {% else %}
                     <div class="no-plates"></div>
                 {% endif %}
                 <div class="search-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
                 <div class="search-vin">VIN: {{ vehicle.VIN }}</div> 
-                
             </a></h2>
         </div>
         
@@ -78,6 +77,114 @@
 </form>
 
 <br />
+    {% if vehicleFilter.form.is_bound and vehicleFilter.qs %}
+        <h1>Search results:</h1>
+        {% for vehicle in vehicleFilter.qs %}
+            {% if user.organisation.organisation_type_id == 3 or user.organisation.organisation_type_id == 4 %}
+                <div class="report_search">
+                    {% if vehicle.customsrecord %}
+                        <div class="search-line">
+                            <h2>
+                                <a href="{% url 'CustomsRecord_edit' vehicle.customsrecord.pk %}">
+                                    
+                                        {% if vehicle.numberplates %}
+                                            <div class="plates">{{ vehicle.numberplates }}</div>
+                                        {% else %}
+                                            <div class="no-plates"></div>
+                                            
+                                            
+                                        {% endif %}
+                                        <div class="search-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
+                                        <div class="search-vin">VIN: {{ vehicle.VIN }}</div>
+                                   
+                                </a>
+                            </h2>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% elif vehicleFilter.form.is_bound %}
+        <h2>No results found</h2>
+    {% endif %}
+
+
+<h1>Search a ownership record by vehicle's VIN or/and number plates to edit* <br>
+        (*you can edit only last vehicle's ownership record) </h1>
+    <br>
+    
+    
+    <img src="{% static 'images/record_search_edit.png' %}" height="60px" style="padding-left: 40px; padding-right: 40px;">
+    
+    <form class="input-form" method="POST">
+        {% csrf_token %}
+    
+        {{ vehicleFilter.form.as_p }}
+        
+        <div class="auth_link">
+            <button type="submit" class="auth-button">SEARCH</button>
+        </div>
+    </form>
+    
+    <br />
+    
+    {% if vehicleFilter.form.is_bound and vehicleFilter.qs %}
+    <h1>Search results:</h1>
+    {% for vehicle in vehicleFilter.qs %}
+    
+    {% if user.organisation.organisation_type_id == 3 or user.organisation.organisation_type_id == 4 %}
+    
+    <div class="report_search">
+    {% if vehicle.ownership_set.last %}
+        <div class="search-line">
+            
+            <h2><a href="{% url 'Ownership_edit' vehicle.ownership_set.last.pk  %}">            
+                {% if vehicle.numberplates %}
+                    <div class="plates">{{ vehicle.numberplates }}</div>
+                {% else %}
+                    <div class="no-plates"></div>
+                {% endif %}
+                <div class="search-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
+                <div class="search-vin">VIN: {{ vehicle.VIN }}</div>            
+    
+            </a></h2>
+            
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% elif vehicleFilter.form.is_bound %}
+        <h2>No results found</h2>
+    
+    
+    
+    {% endif %}
+        
+
+
+
+
+
+
+<h1>Search a number plates record by vehicle's VIN or/and number plates to edit* <br>
+    (*you can edit only last vehicle's number plate record) </h1>
+<br>
+
+
+<img src="{% static 'images/record_search_edit.png' %}" height="60px" style="padding-left: 40px; padding-right: 40px;">
+
+<form class="input-form" method="POST">
+    {% csrf_token %}
+
+    {{ vehicleFilter.form.as_p }}
+    
+    <div class="auth_link">
+        <button type="submit" class="auth-button">SEARCH</button>
+    </div>
+</form>
+
+<br />
 
 {% if vehicleFilter.form.is_bound and vehicleFilter.qs %}
 <h1>Search results:</h1>
@@ -86,22 +193,20 @@
 {% if user.organisation.organisation_type_id == 3 or user.organisation.organisation_type_id == 4 %}
 
 <div class="report_search">
-
+{% if vehicle.numberplate_set.last %}
     <div class="search-line">
-        {% if vehicle.customsrecord %}
-        <h2><a href="{% url 'CustomsRecord_edit' vehicle.customsrecord.pk  %}">
-            <div class="counter">{{ forloop.counter }}.</div>
+        
+        <h2><a href="{% url 'NumberPlate_edit' vehicle.numberplate_set.last.pk  %}">            
             {% if vehicle.numberplates %}
-                <div class="plates">{{ vehicle.numberplates }}</div>
-            {% else %}
-                <div class="no-plates"></div>
+                <div class="plates">{{ vehicle.numberplates }}</div>            
             {% endif %}
             <div class="search-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
             <div class="search-vin">VIN: {{ vehicle.VIN }}</div>            
 
         </a></h2>
-        {% endif %}
+        
     </div>
+    {% endif %}
 </div>
 {% endif %}
 {% endfor %}
@@ -110,13 +215,116 @@
 
 
 
-
-
-    
 {% endif %}
 
 
-{% endif %} 
+
+<h1>Search a finance record by vehicle's VIN or/and number plates to edit* <br>
+    (*you can edit only last vehicle's finance record) </h1>
+<br>
+
+
+<img src="{% static 'images/record_search_edit.png' %}" height="60px" style="padding-left: 40px; padding-right: 40px;">
+
+<form class="input-form" method="POST">
+    {% csrf_token %}
+
+    {{ vehicleFilter.form.as_p }}
+    
+    <div class="auth_link">
+        <button type="submit" class="auth-button">SEARCH</button>
+    </div>
+</form>
+
+<br />
+
+{% if vehicleFilter.form.is_bound and vehicleFilter.qs %}
+<h1>Search results:</h1>
+{% for vehicle in vehicleFilter.qs %}
+
+{% if user.organisation.organisation_type_id == 3 or user.organisation.organisation_type_id == 4 %}
+
+<div class="report_search">
+{% if vehicle.financerecord_set.last %}
+    <div class="search-line">
+        
+        <h2><a href="{% url 'FinanceRecord_edit' vehicle.financerecord_set.last.pk  %}">            
+            {% if vehicle.numberplates %}
+                    <div class="plates">{{ vehicle.numberplates }}</div>
+                {% else %}
+                    <div class="no-plates"></div>
+                {% endif %}
+                <div class="search-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
+                <div class="search-vin">VIN: {{ vehicle.VIN }}</div>              
+
+        </a></h2>
+        
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+{% endfor %}
+{% elif vehicleFilter.form.is_bound %}
+    <h2>No results found</h2>
+
+
+
+{% endif %}
+
+
+<h1>Search an offence record by vehicle's VIN or/and number plates to edit</h1>
+<br>
+
+
+<img src="{% static 'images/record_search_edit.png' %}" height="60px" style="padding-left: 40px; padding-right: 40px;">
+
+<form class="input-form" method="POST">
+    {% csrf_token %}
+
+    {{ vehicleFilter.form.as_p }}
+    
+    <div class="auth_link">
+        <button type="submit" class="auth-button">SEARCH</button>
+    </div>
+</form>
+
+<br />
+
+{% if vehicleFilter.form.is_bound and vehicleFilter.qs %}
+<h1>Search results:</h1>
+{% for vehicle in vehicleFilter.qs %}
+
+{% if user.organisation.organisation_type_id == 3 or user.organisation.organisation_type_id == 4 %}
+
+<div class="report_search">
+{% if vehicle.policerecord %}
+    <div class="search-line">
+        
+        <h2><a href="{% url 'FinanceRecord_edit' vehicle.financerecord_set.last.pk  %}">            
+            {% if vehicle.numberplates %}
+                    <div class="plates">{{ vehicle.numberplates }}</div>
+                {% else %}
+                    <div class="no-plates"></div>
+                {% endif %}
+                <div class="search-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
+                <div class="search-vin">VIN: {{ vehicle.VIN }}</div>              
+
+        </a></h2>
+        
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+{% endfor %}
+{% elif vehicleFilter.form.is_bound %}
+    <h2>No results found</h2>
+
+
+
+{% endif %}
+
+
+{% endif %}
 
 {% endblock content %}
     

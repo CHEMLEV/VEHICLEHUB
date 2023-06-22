@@ -151,8 +151,6 @@ class SearchEditDetailsView(DetailView):
     template_name = "search_edit_details.html"
 
 
-
-
 class VehicleUpdateView(UpdateView):
     model = Vehicle
     fields = ['year', 'brand', 'model', 'fuel', 'output', 'drivetrain', 'trim_line', 'registered_owner_user_id']
@@ -161,7 +159,8 @@ class VehicleUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['my_model'] = self.kwargs.get('plate') + ' CustomsRecord'
+        context['my_model'] = "vehicle"
+        context['VIN'] = self.object
         return context
 
     def get_success_url(self):
@@ -179,14 +178,33 @@ class VehicleUpdateView(UpdateView):
 
 class CustomsRecordUpdateView(UpdateView):  
     model = CustomsRecord
-    fields = '__all__'
+    fields = ['record_date', 'mileage', 'import_as', 'damaged', 'country_of_origin']
     template_name = "record_edit.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['my_model'] = f"{self.object} CustomsRecord"
+        context['my_model'] = "customs"
+        context['VIN'] = self.object.vehicle_id.VIN
         return context
 
+    def get_success_url(self):
+        return reverse_lazy('ui')
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.user_id == self.request.user
+    
+    
+class OwnershipUpdateView(UpdateView):  
+    model = Ownership
+    fields = ['record_date', 'mileage', 'new_owner']
+    template_name = "record_edit.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['my_model'] = "ownership"
+        context['VIN'] = self.object.vehicle_id.VIN
+        return context
     def get_success_url(self):
         return reverse_lazy('ui')
 
@@ -195,58 +213,40 @@ class CustomsRecordUpdateView(UpdateView):
         return obj.user_id == self.request.user 
 
 
-class OwnershipUpdateView(UpdateView):  
-    model = Ownership
-    fields = '__all__'
-    template_name = "record_edit.html"
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['my_model'] = self.kwargs.get('plate') + ' Ownership'
-        return context
-
-    def get_success_url(self):
-        return reverse_lazy('search_edit_details', kwargs={'pk': self.kwargs.get('vehicle_pk')})
-
-    def test_func(self):  # new
-        obj = self.get_object()
-        return obj.developer == self.request.user
-
-
 class NumberPlateUpdateView(UpdateView):  
     model = NumberPlate
-    fields = '__all__'
+    fields = ['record_date', 'mileage', 'new_plates']
     template_name = "record_edit.html"
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['my_model'] = self.kwargs.get('plate') + ' NumberPlate'
+        context['my_model'] = "number plates"
+        context['VIN'] = self.object.vehicle_id.VIN
         return context
-
     def get_success_url(self):
-        return reverse_lazy('search_edit_details', kwargs={'pk': self.kwargs.get('vehicle_pk')})
+        return reverse_lazy('ui')
 
-    def test_func(self):  # new
+    def test_func(self):
         obj = self.get_object()
-        return obj.developer == self.request.user
-
+        return obj.user_id == self.request.user 
+ 
 
 class FinanceRecordUpdateView(UpdateView):  
     model = FinanceRecord
-    fields = '__all__'
+    fields = ['record_date', 'mileage', 'expiry_date', 'actual_completion_date']
     template_name = "record_edit.html"
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['my_model'] = self.kwargs.get('plate') + ' FinanceRecord'
+        context['my_model'] = "finance"
+        context['VIN'] = self.object.vehicle_id.VIN
         return context
-
     def get_success_url(self):
-        return reverse_lazy('search_edit_details', kwargs={'pk': self.kwargs.get('vehicle_pk')})
+        return reverse_lazy('ui')
 
-    def test_func(self):  # new
+    def test_func(self):
         obj = self.get_object()
-        return obj.developer == self.request.user
+        return obj.user_id == self.request.user 
 
 
 class AccidentRecordUpdateView(UpdateView):  
@@ -332,7 +332,7 @@ class CustomsRecordCreateView(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        form.instance.user_id = self.request.user.id
+        form.instance.user_id = self.request.user
         return super().form_valid(form)
 
 
@@ -353,7 +353,7 @@ class OwnershipCreateView(LoginRequiredMixin, CreateView):  # new
         return form
 
     def form_valid(self, form):
-        form.instance.user_id = self.request.user.id
+        form.instance.user_id = self.request.user
         return super().form_valid(form)
 
 
@@ -374,7 +374,7 @@ class NumberPlateCreateView(LoginRequiredMixin, CreateView):  # new
         return form
 
     def form_valid(self, form):
-        form.instance.user_id = self.request.user.id
+        form.instance.user_id = self.request.user
         return super().form_valid(form)
 
 
@@ -395,7 +395,7 @@ class FinanceRecordCreateView(LoginRequiredMixin, CreateView):  # new
         return form
 
     def form_valid(self, form):
-        form.instance.user_id = self.request.user.id
+        form.instance.user_id = self.request.user
         return super().form_valid(form)
 
 
@@ -416,15 +416,16 @@ class AccidentRecordCreateView(LoginRequiredMixin, CreateView):  # new
         return form
 
     def form_valid(self, form):
-        form.instance.user_id = self.request.user.id
+        form.instance.user_id = self.request.user
         return super().form_valid(form)
 
 
-class PoliceRecordCreateView(LoginRequiredMixin, CreateView):  # new 
+class PoliceRecordCreateView(LoginRequiredMixin, CreateView): 
     model = PoliceRecord
     template_name = "record_new.html"
-    fields = '__all__'
+    fields = ["vehicle_id", "record_date", "breach_type_id", "punishment_type_id", "due_date", "expiry_date", "comment"]  
     success_url = reverse_lazy('add_record_types')
+    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -433,11 +434,11 @@ class PoliceRecordCreateView(LoginRequiredMixin, CreateView):  # new
     
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        form.fields.pop('user_id')
+        form.fields['expiry_date'].required = False 
         return form
 
     def form_valid(self, form):
-        form.instance.user_id = self.request.user.id
+        form.instance.user_id = self.request.user
         return super().form_valid(form)
 
 
@@ -458,7 +459,7 @@ class MaintenanceRecordCreateView(LoginRequiredMixin, CreateView):  # new
         return form
 
     def form_valid(self, form):
-        form.instance.user_id = self.request.user.id
+        form.instance.user_id = self.request.user
         return super().form_valid(form)
 
 
