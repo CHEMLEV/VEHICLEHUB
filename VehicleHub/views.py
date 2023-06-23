@@ -132,6 +132,19 @@ class VehicleDetailsView(DetailView):
     model = Vehicle
     template_name = "report_details.html"
 
+class MaintenanceRecordsToEditView(DetailView): 
+    model = Vehicle
+    template_name = "maintenance_records_to_edit.html"
+
+class AccidentRecordsToEditView(DetailView): 
+    model = Vehicle
+    template_name = "accident_records_to_edit.html"
+
+
+class PoliceRecordsToEditView(DetailView): 
+    model = Vehicle
+    template_name = "police_records_to_edit.html"
+
 
 class SearchEditListView(ListView):
     model = Vehicle

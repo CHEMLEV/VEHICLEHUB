@@ -134,7 +134,7 @@ body {
   border-radius: 5px;
   font-size: 30px;
   font-weight: bold;
-  width: ;
+  width: 100px;
 }
 
 .no-plates {
@@ -264,13 +264,11 @@ body {
   margin-left: 30px;
 }
 
-
 .search-vin {
     display: inline-block;
     vertical-align: middle;
     width: 340px;
 }
-
 
 .search-line {
   display: inline-block;
@@ -289,7 +287,6 @@ body {
   border: 3px solid #000; 
 }
 
-
 .report-line {
   display: flex;
   align-items: center;
@@ -302,8 +299,6 @@ body {
 .plates-report {
   display: inline-block;
 }
-
-
 
 .report-line, .report-logo, .report-make-model  {
   display: inline-block;

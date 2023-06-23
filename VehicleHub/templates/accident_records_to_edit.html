@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+
+<div class="report-line-container">
+  <h1>
+    
+    Accident records to edit for     
+    
+    <div class="report-line">
+      <div class="report-logo">
+        <img src="{% static 'images/' %}{{ vehicle.brand.logo_url }}" height="70px" padding="20px" alt="Brand Logo">
+      </div>
+      <div class="report-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }} {{vehicle.VIN}}</div> 
+      
+    </div>
+  </h1>
+</div>
+
+<div>
+  <div>    
+
+    <table class="report-table">
+      <colgroup>
+        <col style="width: 4%;">
+        <col style="width: 8%;">
+        <col style="width: 8%;">
+        <col style="width: 40%;">
+        <col style="width: 40%;">
+        
+    </colgroup>
+        <thead>
+            <tr>
+              <th><h2>#</h2></th>
+              <th><h2>Date</h2></th>
+              <th><h2>Mileage</h2></th>
+              <th><h2>Details</h2></th>
+              <th><h2>Other vehicles involved</h2></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in vehicle.accidentrecord_set.all %}
+            <tr {% if forloop.counter|divisibleby:2 %}class="maroon-row"{% else %}class="blue-row"{% endif %} onclick="location.href='{% url 'ui' %}'" style="cursor: pointer;">
+                <td>{{ forloop.counter }}</td>
+                <td>{{ record.record_date|date:"d-m-Y" }}</td>
+                <td>{{ record.mileage }} km</td>
+                <td>{{ record.comment }}</td>
+                <td>{% if record.other_participants %}{% if user.organisation.organisation_type.id == 3 %}{{ record.other_participants }}{% else %}Yes{% endif %}{% else %}No{% endif %}</td>
+            </tr>
+            
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endif %}
+
+{% endblock content %}

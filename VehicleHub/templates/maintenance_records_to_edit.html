@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+
+
+<div class="report-line-container">
+  <h1>
+    
+    Maintenance records to edit for     
+    
+    <div class="report-line">
+      <div class="report-logo">
+        <img src="{% static 'images/' %}{{ vehicle.brand.logo_url }}" height="70px" padding="20px" alt="Brand Logo">
+      </div>
+      <div class="report-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }} {{vehicle.VIN}}</div> 
+      
+    </div>
+  </h1>
+</div>
+
+<div>
+  <h1>Maintenance records:</h1>
+
+  <table class="report-table">
+    <colgroup>
+    <col style="width: 2%;">
+    <col style="width: 8%;">
+    <col style="width: 8%;">
+    <col style="width: 20%;">
+    <col style="width: 20%;">
+    <col style="width: 20%;">
+    <col style="width: 20%;">
+</colgroup>
+      <thead>
+          <tr>
+              
+              <th><h2>#</h2></th>
+              <th><h2>Date</h2></th>
+              <th><h2>Mileage</h2></th>
+              <th><h2>Maintenance Type</h2></th>
+              <th><h2>Details</h2></th>
+              <th><h2>Products Used</h2></th>
+              <th><h2>Carried out by</h2></th>
+          </tr>
+      </thead>
+      <tbody>
+        {% for record in vehicle.maintenancerecord_set.all|dictsort:"record_date" %}
+        
+        <tr {% if forloop.counter|divisibleby:2 %}class="maroon-row"{% else %}class="blue-row"{% endif %} onclick="location.href='{% url 'ui' %}'" style="cursor: pointer;">
+          <td>{{ forloop.counter }}</td>
+          <td>{{ record.record_date|date:"d-m-Y" }}</td>
+          <td>{{ record.mileage }} km</td>
+          <td>{{ record.maintenance_type_id.maintenance_type_title }}</td>
+          <td>{% if record.comment %}{{ record.comment }}{% endif %}</td>
+          <td>{% if record.products_used %}{{ record.products_used }}{% endif %}</td>
+          <td>{% if record.user_id.organisation.title %}{{ record.user_id.organisation.title }}{% endif %}</td>
+        </tr>
+      
+        {% endfor %}
+      </tbody>
+      
+      
+</table>
+</div>
+{% endif %}
+
+{% endblock content %}

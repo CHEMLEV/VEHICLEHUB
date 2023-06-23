@@ -35,6 +35,9 @@ urlpatterns = [
     path("PoliceRecord/new/", views.PoliceRecordCreateView.as_view(), name = "PoliceRecord_new"),
     path("MaintenanceRecord/new/", views.MaintenanceRecordCreateView.as_view(), name = "MaintenanceRecord_new"),
     path("vehicle/<int:pk>/delete", views.VehicleDeleteView.as_view(), name = "vehicle_delete" ),
+    path("MaintenanceRecords/<int:pk>", views.MaintenanceRecordsToEditView.as_view(), name = "maintenance_records_to_edit" ),
+    path("AccidentRecords/<int:pk>", views.AccidentRecordsToEditView.as_view(), name = "accident_records_to_edit" ),
+    path("PoliceRecords/<int:pk>", views.PoliceRecordsToEditView.as_view(), name = "police_records_to_edit" ),
     
   
 ]

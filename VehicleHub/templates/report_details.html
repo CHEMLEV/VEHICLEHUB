@@ -91,12 +91,12 @@
     Owhership records:  </h1>
     <h3>
       Total number of owners:    
-      {{ vehicle.ownerships.all.count }}<br><br>
+      {{ vehicle.ownership_set.count }}<br><br>
 
       Ownership change dates and mileage:  <br>  
-      {% for ownership in vehicle.ownerships.all %}
+      {% for record in vehicle.ownership_set.all %}
       {{ forloop.counter }}. 
-    {{ ownership.record_date|date:"d-m-Y" }} at {{ ownership.mileage }} km{% if user.organisation.organisation_type.id == 3 %}. Owner: {{ ownership.new_owner }} {% endif %}<br>
+    {{ record.record_date|date:"d-m-Y" }} at {{ record.mileage }} km{% if user.organisation.organisation_type.id == 3 %}. Owner: {{ record.new_owner }} {% endif %}<br>
   {% endfor %}
                     
        </h3>
