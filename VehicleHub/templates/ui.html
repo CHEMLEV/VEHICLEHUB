@@ -3,32 +3,46 @@
 {% load static %}
 
 {% block content %}
-    <br>
-    <center><h2>PLESASE CHOOSE ONE OF THE FOLLOWING OPTIONS</h2>
-    <br>
 
-        <a href="{% url 'request_report' %}">
+{% if user.is_authenticated %}
+<br>  
+
+
+    <center><h2>PLEASE CLICK BELOW TO: </h2> <center>
+
+
+
+{% if user.organisation.organisation_type.id == 3 or user.organisation.organisation_type.id == 4 or user.organisation.organisation_type.id == 7 %}
+    <br>
+        <center><a href="{% url 'request_report' %}">
         <img class="icon"src="{% static 'images/report_car.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
         </a>
-        <br>
-        
-    
+        <br>   
         <div class="auth_link" style="position: relative;">
-            <a href="{% url 'request_report' %}" class="auth-button">REQUEST A REPORT</a>
-        </div><br>
+        <a href="{% url 'request_report' %}" class="auth-button">REQUEST A REPORT</a>
+        </div></center>
+{% endif %}
 
-        <h2> OR <br></h2>
 
-        <a href="{% url 'manage_records' %}">
+{% if user.organisation.organisation_type.id == 3 %}
+       <br>
+       <center><h2> OR <br></h2></center>
+{% endif %}
+
+
+{% if user.organisation.organisation_type.id == 1 or user.organisation.organisation_type.id == 2 or user.organisation.organisation_type.id == 3 or user.organisation.organisation_type.id == 5 or user.organisation.organisation_type.id == 6 %}
+
+        <center><a href="{% url 'manage_records' %}">
         <img class="icon" src="{% static 'images/reports.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
         </a>
         <br>
         
         <div class="auth_link" style="position: relative;">
             <a href="{% url 'manage_records' %}" class="auth-button">MANAGE RECORDS</a>
-        </div>
-        
-   
-</center>
+        </div> 
+        </center>
+{% endif %}
+
+{% endif %}
 
 {% endblock %}

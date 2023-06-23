@@ -88,6 +88,9 @@ def manage_records_view(request):
 def add_record_types_view(request):
     return render(request, 'add_record_types.html')
 
+def police_edit_options_view(request):
+    return render(request, 'police_edit_options.html')
+
 
 def HomePageView(request):
     return render (request, 'home.html') 
@@ -158,6 +161,13 @@ class SearchEditListView(ListView):
     def post(self, request, *args, **kwargs):
         view = views.vehicle_filter_list
         return view(request, "search_edit.html", *args, **kwargs)
+    
+    def search_edit_view(request, type):    
+    
+        context = {
+        'type': type,
+        }
+        return render(request, 'search_edit.html', context)
     
 
 class SearchEditDetailsView(DetailView): 

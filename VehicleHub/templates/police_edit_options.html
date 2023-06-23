@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+
+{% if user.organisation.organisation_type.id == 3 %}
+
+<br>
+<center><h2>PLESASE CHOOSE RECORD TYPE TO EDIT BELOW</h2>
+<br>
+        <a href="{% url 'search_edit' type='offence' %}">
+            <img class="icon" src="{% static 'images/record_search_edit.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
+        </a>
+        <br>
+    
+        <div class="auth_link" style="position: relative;">
+            <a href="{% url 'search_edit' type='offence' %}" class="auth-button"> OFFENCE RECORD</a>
+        </div><br>
+
+        <h2> OR <br></h2>
+
+        <a href="{% url 'search_edit' type='accident' %}">
+            <img class="icon" src="{% static 'images/record_search_edit.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
+            </a>
+            <br>
+
+        <div class="auth_link" style="position: relative;">
+            <a href="{% url 'search_edit' type='accident' %}" class="auth-button"> ACCIDENT RECORD</a>
+            
+        </div>       
+   
+</center>
+
+{% endif %}
+
+{% endblock %}

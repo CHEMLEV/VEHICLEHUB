@@ -6,6 +6,10 @@
 
 {% if user.is_authenticated %}
 
+
+
+{% if user.organisation.organisation_type.id == 1 %}    
+
 <h1>Search a vehicle record to edit by VIN or/and number plates</h1>
 <br>
 
@@ -44,9 +48,11 @@
 
     {% endfor %}
 {% elif vehicleFilter.form.is_bound %}
-    <h2>No results found</h2>
-    
+    <h2>No results found</h2>  
+
+
 {% endif %}
+
 
 
 <h1>Search a customs record to edit by vehicle's VIN or/and number plates</h1>
@@ -95,6 +101,10 @@
         <h2>No results found</h2>
     {% endif %}
 
+{% endif %}
+
+{% if user.organisation.organisation_type.id == 2 %}    
+
 
 <h1>Search a ownership record to edit* by vehicle's VIN or/and number plates<br>
         (*you can edit only last vehicle's ownership record) </h1>
@@ -140,16 +150,9 @@
     
     {% endfor %}
     {% elif vehicleFilter.form.is_bound %}
-        <h2>No results found</h2>
+        <h2>No results found</h2>      
     
-    
-    
-    {% endif %}
-        
-
-
-
-
+    {% endif %}       
 
 
 <h1>Search a number plates record to edit* by vehicle's VIN or/and number plates<br>
@@ -196,11 +199,11 @@
 {% elif vehicleFilter.form.is_bound %}
     <h2>No results found</h2>
 
-
+{% endif %}
 
 {% endif %}
 
-
+{% if user.organisation.organisation_type.id == 6 %} 
 
 <h1>Search a finance record to edit* by vehicle's VIN or/and number plates<br>
     (*you can edit only last vehicle's finance record) </h1>
@@ -252,6 +255,10 @@
 
 {% endif %}
 
+{% endif %}
+
+
+{% if user.organisation.organisation_type.id == 3 %} 
 
 <h1>Search an offence record to edit by vehicle's VIN or/and number plates</h1>
 <br>
@@ -292,6 +299,9 @@
 
 {% endif %}
 
+{% endif %}
+
+{% if user.organisation.organisation_type.id == 3 or user.organisation.organisation_type.id == 6 %} 
 
 <h1>Search an accident record to edit by vehicle's VIN or/and number plates</h1><br>
 
@@ -332,6 +342,9 @@
     <h2>No results found</h2>
 {% endif %}
 
+{% endif %}
+
+{% if user.organisation.organisation_type.id == 5 %} 
 
 <h1>Search a maintenance record to edit by vehicle's VIN or/and number plates</h1><br>
 
@@ -370,6 +383,8 @@
 
 {% elif vehicleFilter.form.is_bound %}
     <h2>No results found</h2>
+{% endif %}
+
 {% endif %}
 
 

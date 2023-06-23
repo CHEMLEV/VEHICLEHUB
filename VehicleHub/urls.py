@@ -11,6 +11,7 @@ urlpatterns = [
     path('request_sent', views.request_sent_view, name='request_sent'),
     path('ui', views.ui_view, name='ui'),
     path('manage_records', views.manage_records_view, name='manage_records'),
+    path('police_edit_options', views.police_edit_options_view, name='police_edit_options_records'),
     path('add_record_types', views.add_record_types_view, name='add_record_types'),
     path('home/', views.HomePageView, name = "home"),
     path("request_report/", views.VehiclesListView.as_view(), name = "request_report"),

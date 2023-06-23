@@ -6,6 +6,8 @@
 
 {% if user.is_authenticated %}
 
+{% if user.organisation.organisation_type.id == 3 %}
+
 
 <div class="report-line-container">
   <h1>
@@ -62,6 +64,7 @@
     </table>
 </div>
 
+{% endif %}
 
 {% endif %}
 
