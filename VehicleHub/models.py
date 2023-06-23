@@ -137,7 +137,7 @@ class AccidentRecord(models.Model):
     comment = models.TextField(max_length=300, blank=True)
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 class MaintenanceType(models.Model):
     maintenance_type_title = models.TextField(max_length=500, null=False)
@@ -157,6 +157,6 @@ class MaintenanceRecord(models.Model):
    
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 

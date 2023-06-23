@@ -45,7 +45,7 @@
         </thead>
         <tbody>
             {% for record in vehicle.accidentrecord_set.all %}
-            <tr {% if forloop.counter|divisibleby:2 %}class="maroon-row"{% else %}class="blue-row"{% endif %} onclick="location.href='{% url 'ui' %}'" style="cursor: pointer;">
+            <tr {% if forloop.counter|divisibleby:2 %}class="maroon-row"{% else %}class="blue-row"{% endif %} onclick="location.href='{% url 'AccidentRecord_edit' record.pk %}'" style="cursor: pointer;">
                 <td>{{ forloop.counter }}</td>
                 <td>{{ record.record_date|date:"d-m-Y" }}</td>
                 <td>{{ record.mileage }} km</td>
