@@ -30,7 +30,7 @@
 {% endif %}
 
 
-{% if user.organisation.organisation_type.id == 1 or user.organisation.organisation_type.id == 2 or user.organisation.organisation_type.id == 3 or user.organisation.organisation_type.id == 5 or user.organisation.organisation_type.id == 6 %}
+{% if user.organisation.organisation_type.id == 1 or user.organisation.organisation_type.id == 2 or user.organisation.organisation_type.id == 3 or user.organisation.organisation_type.id == 5 or user.organisation.organisation_type.id == 6 or user.organisation.organisation_type.id == 8 %}
 
         <center><a href="{% url 'manage_records' %}">
         <img class="icon" src="{% static 'images/reports.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">

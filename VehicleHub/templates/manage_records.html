@@ -5,11 +5,11 @@
 {% block content %}
 
 
-{% if user.organisation.organisation_type.id == 1 or user.organisation.organisation_type.id == 2 or user.organisation.organisation_type.id == 3 or user.organisation.organisation_type.id == 5 or user.organisation.organisation_type.id == 6 %}
+{% if user.organisation.organisation_type.id == 1 or user.organisation.organisation_type.id == 2 or user.organisation.organisation_type.id == 3 or user.organisation.organisation_type.id == 5 or user.organisation.organisation_type.id == 6 or user.organisation.organisation_type.id == 8 %}
 
 <br>
-<center><h2>PLESASE CHOOSE ONE OF THE FOLLOWING OPTIONS</h2>
-<br>
+<center><h2>PLESASE CHOOSE ONE OF THE FOLLOWING OPTIONS:</h2>
+
         <a href="{% url 'add_record_types' %}">
         <img class="icon" src="{% static 'images/record_add.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
         </a>
@@ -31,6 +31,30 @@
         <div class="auth_link" style="position: relative;">
             <a href="{% url 'police_edit_options' %}" class="auth-button">SEARCH/EDIT RECORD</a>            
         </div>
+
+
+        {% elif user.organisation.organisation_type.id == 1 %}
+
+        <a href="{% url 'customs_edit_options' %}">
+            <img class="icon" src="{% static 'images/record_search_edit.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
+            </a>
+            <br>
+        
+        <div class="auth_link" style="position: relative;">
+            <a href="{% url 'customs_edit_options' %}" class="auth-button">SEARCH/EDIT RECORD</a>            
+        </div>
+
+        {% elif user.organisation.organisation_type.id == 2 %}
+
+        <a href="{% url 'lta_edit_options' %}">
+            <img class="icon" src="{% static 'images/record_search_edit.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
+            </a>
+            <br>
+        
+        <div class="auth_link" style="position: relative;">
+            <a href="{% url 'lta_edit_options' %}" class="auth-button">SEARCH/EDIT RECORD</a>            
+        </div>
+
 
         {% else %}
 

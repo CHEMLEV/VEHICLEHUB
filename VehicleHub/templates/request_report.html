@@ -6,7 +6,10 @@
 
 {% if user.is_authenticated %}
 
-<h1>Search a vehicle by plates or/and VIN to request a report </h1>
+<h1>Search a vehicle by plates or/and VIN to request a report{% if user.organisation.organisation_type.id == 7 %}*{% endif %} </h1>
+{% if user.organisation.organisation_type.id == 7 %}
+<h1>*you can only search vehicles that you own </h1>
+{% endif %}
 <br>
 
 
@@ -30,13 +33,15 @@
     <h1>Search results:</h1>
     {% for vehicle in vehicleFilter.qs %}
     
-    {% if user.organisation.organisation_type_id == 3 or user.organisation.organisation_type_id == 4 %}
+    {% if user.organisation.organisation_type_id == 3 or user.organisation.organisation_type_id == 4 or user.organisation.organisation_type_id == 7 and vehicle.registered_owner_user_id.id == user.id%}
     
     <div class="report_search">
         
         <div class="search-line">
             <h2><a href="{% url 'report_details' vehicle.pk %}">
-                <div class="counter">{{ forloop.counter }}.</div> 
+                {% if user.organisation.organisation_type_id == 3 or user.organisation.organisation_type_id == 4 %}
+                <div class="counter">{{ forloop.counter }}.</div>
+                {% endif %}
                 {% if vehicle.numberplates %}
                     <div class="plates">{{ vehicle.numberplates }}</div>
                 {% else %}
@@ -50,25 +55,7 @@
         
     
     {% endif %}
-
-    {% if user.organisation.organisation_type_id == 7 and vehicle.registered_owner_user_id.id == user.id %}
-           
-        <div class="report_search">
-            <h2><a href="{% url 'report_details' vehicle.pk %}">
-                {% if vehicle.numberplates %}
-                    <div class="plates">{{ vehicle.numberplates }}</div>
-                {% endif %}
-                {{ vehicle.make }}  {{ vehicle.model }}
-                VIN: {{ vehicle.VIN }}
-                <br>
-               
-                
-            </a></h2>
-        </div>
-        
-    {% endif %}
     
-
 
     {% endfor %}
 {% elif vehicleFilter.form.is_bound %}

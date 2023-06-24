@@ -82,6 +82,12 @@ def request_sent_view(request):
 def ui_view(request):
     return render(request, 'ui.html')
 
+def success_view(request):
+    return render(request, 'success.html')
+
+def success_create_view(request):
+    return render(request, 'success_create.html')
+
 def manage_records_view(request):
     return render(request, 'manage_records.html')
 
@@ -92,12 +98,20 @@ def police_edit_options_view(request):
     return render(request, 'police_edit_options.html')
 
 
+def customs_edit_options_view(request):
+    return render(request, 'customs_edit_options.html')
+
+def lta_edit_options_view(request):
+    return render(request, 'lta_edit_options.html')
+
+
+
 def HomePageView(request):
     return render (request, 'home.html') 
 
 
 
-def vehicle_filter_list(request, template_name):
+def vehicle_filter_list(request, template_name, *args, **kwargs):
     
     vehicles = Vehicle.objects.all()
 
@@ -113,8 +127,9 @@ def vehicle_filter_list(request, template_name):
 
 
     context = {
-        'vehicleFilter': vehicleFilter
+    'vehicleFilter': vehicleFilter
     }
+    context.update(kwargs)
 
     return render(request, template_name, context)
 
@@ -155,19 +170,11 @@ class SearchEditListView(ListView):
     template_name = "search_edit.html"
 
     def get(self, request, *args, **kwargs):
-        view = views.vehicle_filter_list
-        return view(request, "search_edit.html", *args, **kwargs)
+        return views.vehicle_filter_list(request, "search_edit.html", *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        view = views.vehicle_filter_list
-        return view(request, "search_edit.html", *args, **kwargs)
+        return views.vehicle_filter_list(request, "search_edit.html", *args, **kwargs)
     
-    def search_edit_view(request, type):    
-    
-        context = {
-        'type': type,
-        }
-        return render(request, 'search_edit.html', context)
     
 
 class SearchEditDetailsView(DetailView): 
@@ -179,7 +186,8 @@ class VehicleUpdateView(UpdateView):
     model = Vehicle
     fields = ['year', 'brand', 'model', 'fuel', 'output', 'drivetrain', 'trim_line', 'registered_owner_user_id']
     template_name = "record_edit.html"
-    success_url = reverse_lazy('search_edit_details')
+    
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -187,8 +195,8 @@ class VehicleUpdateView(UpdateView):
         context['VIN'] = self.object
         return context
 
-    def get_success_url(self):
-        return reverse_lazy('ui')
+    def get_success_url(self):        
+        return reverse_lazy('success')
 
     def test_func(self):
         obj = self.get_object()
@@ -198,6 +206,8 @@ class VehicleUpdateView(UpdateView):
         form = super().get_form(form_class)
         form.fields['registered_owner_user_id'].required = False
         return form
+    
+    
 
 
 class CustomsRecordUpdateView(UpdateView):  
@@ -212,7 +222,7 @@ class CustomsRecordUpdateView(UpdateView):
         return context
 
     def get_success_url(self):
-        return reverse_lazy('ui')
+        return reverse_lazy('success')
 
     def test_func(self):
         obj = self.get_object()
@@ -247,8 +257,9 @@ class NumberPlateUpdateView(UpdateView):
         context['my_model'] = "number plates"
         context['VIN'] = self.object.vehicle_id.VIN
         return context
-    def get_success_url(self):
-        return reverse_lazy('ui')
+    
+    def get_success_url(self):        
+        return reverse_lazy('success')
 
     def test_func(self):
         obj = self.get_object()
@@ -265,9 +276,10 @@ class FinanceRecordUpdateView(UpdateView):
         context['my_model'] = "finance"
         context['VIN'] = self.object.vehicle_id.VIN
         return context
-    def get_success_url(self):
-        return reverse_lazy('ui')
-
+    
+    def get_success_url(self):        
+        return reverse_lazy('success')
+    
     def test_func(self):
         obj = self.get_object()
         return obj.user_id == self.request.user 
@@ -284,8 +296,8 @@ class AccidentRecordUpdateView(UpdateView):
         context['VIN'] = self.object.vehicle_id.VIN
         return context
     
-    def get_success_url(self):
-        return reverse_lazy('ui')
+    def get_success_url(self):        
+        return reverse_lazy('success')
 
     def test_func(self):
         obj = self.get_object()
@@ -304,7 +316,7 @@ class PoliceRecordUpdateView(UpdateView):
         return context          
     
     def get_success_url(self):        
-        return reverse_lazy('ui')
+        return reverse_lazy('success')
 
     def test_func(self):
         obj = self.get_object()
@@ -323,7 +335,7 @@ class MaintenanceRecordUpdateView(UpdateView):
         return context          
     
     def get_success_url(self):        
-        return reverse_lazy('ui')
+        return reverse_lazy('success')
 
     def test_func(self):
         obj = self.get_object()
@@ -345,6 +357,9 @@ class VehicleCreateView(LoginRequiredMixin, CreateView):
         form = super().get_form(form_class)
         form.fields['registered_owner_user_id'].required = False 
         return form
+    
+    def get_success_url(self):        
+        return reverse_lazy('success_create')
 
 
 class CustomsRecordCreateView(LoginRequiredMixin, CreateView):
@@ -361,6 +376,9 @@ class CustomsRecordCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user_id = self.request.user
         return super().form_valid(form)
+    
+    def get_success_url(self):        
+        return reverse_lazy('success_create')
 
 
 class OwnershipCreateView(LoginRequiredMixin, CreateView):  # new 

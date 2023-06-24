@@ -5,29 +5,29 @@
 {% block content %}
 
 
-{% if user.organisation.organisation_type.id == 3 %}
+{% if user.organisation.organisation_type.id == 1 %}
 
 <br>
 <center><h2>PLESASE CHOOSE RECORD TYPE TO EDIT BELOW:</h2>
 <br>
-        <a href="{% url 'search_edit_with_type' type='offence' %}">
+        <a href="{% url 'search_edit_with_type' type='vehicle' %}">
             <img class="icon" src="{% static 'images/record_search_edit.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
         </a>
         <br>
     
         <div class="auth_link" style="position: relative;">
-            <a href="{% url 'search_edit_with_type' type='offence' %}" class="auth-button"> OFFENCE RECORD</a>
+            <a href="{% url 'search_edit_with_type' type='vehicle' %}" class="auth-button"> VEHICLE RECORD</a>
         </div><br>
 
         <h2> OR <br></h2>
 
-        <a href="{% url 'search_edit_with_type' type='accident' %}">
+        <a href="{% url 'search_edit_with_type' type='customs' %}">
             <img class="icon" src="{% static 'images/record_search_edit.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
             </a>
             <br>
 
         <div class="auth_link" style="position: relative;">
-            <a href="{% url 'search_edit_with_type' type='accident' %}" class="auth-button"> ACCIDENT RECORD</a>
+            <a href="{% url 'search_edit_with_type' type='customs' %}" class="auth-button"> CUSTOMS RECORD</a>
             
         </div>       
    

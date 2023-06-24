@@ -9,7 +9,6 @@
 
 <br>
 <center><h2>PLEASE CLICK BELOW TO:</h2></center>
-<br>
 
 {% if user.organisation.organisation_type.id == 1 %}
 <center><a href="{% url 'vehicle_new' %}">
@@ -75,27 +74,43 @@
 
 {% if user.organisation.organisation_type.id == 3 %}
 
-<center><a href="{% url 'PoliceRecord_new' %}">
-                    <img class="icon" src="{% static 'images/record_add.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
-                    </a>
-                    <br>
+<center> <a href="{% url 'PoliceRecord_new' %}">
+    <img class="icon" src="{% static 'images/record_add.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
+    </a>
+    <br>
+
+    <div class="auth_link" style="position: relative;">
+        <a href="{% url 'PoliceRecord_new' %}" class="auth-button"> ADD OFFENCE RECORD</a>
+    </div><br>
+    
+    <h2> OR <br></h2>
+                     
+    </div>  
+    
+    
+    
+    
+    
+    </center>
+
+{% endif %}
+
+
+{% if user.organisation.organisation_type.id == 3 or user.organisation.organisation_type.id == 8 %}   
+    
+<center>
+    
+    <a href="{% url 'AccidentRecord_new' %}">
+    <img class="icon" src="{% static 'images/record_add.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
+    </a>
+    <br>
+
+    <div class="auth_link" style="position: relative;">
+        <a href="{% url 'AccidentRecord_new' %}" class="auth-button"> ADD ACCIDENT RECORD</a>
+    </div><br>
                 
-                    <div class="auth_link" style="position: relative;">
-                        <a href="{% url 'PoliceRecord_new' %}" class="auth-button"> ADD OFFENCE RECORD</a>
-                    </div><br>
-
-                    <h2> OR <br></h2>
-
-                    <a href="{% url 'AccidentRecord_new' %}">
-                        <img class="icon" src="{% static 'images/record_add.png' %}" height="70px" width="70px" style="padding: 5px; border-radius: 5px; border: 3px solid black; margin-bottom: 10px;">
-                        </a>
-                        <br>
-                    
-                        <div class="auth_link" style="position: relative;">
-                            <a href="{% url 'AccidentRecord_new' %}" class="auth-button"> ADD ACCIDENT RECORD</a>
-                        </div><br>    
-                                         
-                        </div></center>
+                  
+                    </center>
 {% endif %}
 
 {% if user.organisation.organisation_type.id == 5 %}                

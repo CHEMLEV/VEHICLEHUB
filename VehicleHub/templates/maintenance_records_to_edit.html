@@ -49,7 +49,7 @@
       </thead>
       <tbody>
         {% for record in vehicle.maintenancerecord_set.all|dictsort:"record_date" %}
-        
+                {% if record.user_id.organisation == user.organisation %}
         <tr {% if forloop.counter|divisibleby:2 %}class="maroon-row"{% else %}class="blue-row"{% endif %} onclick="location.href='{% url 'MaintenanceRecord_edit' record.pk %}'" style="cursor: pointer;">
           <td>{{ forloop.counter }}</td>
           <td>{{ record.record_date|date:"d-m-Y" }}</td>
@@ -59,7 +59,7 @@
           <td>{% if record.products_used %}{{ record.products_used }}{% endif %}</td>
           <td>{% if record.user_id.organisation.title %}{{ record.user_id.organisation.title }}{% endif %}</td>
         </tr>
-      
+              {% endif %}
         {% endfor %}
       </tbody>
       

@@ -8,11 +8,9 @@
 
 
 
-{% if user.organisation.organisation_type.id == 1 %}    
+{% if user.organisation.organisation_type.id == 1 and type == 'vehicle' %} 
 
 <h1>Search a vehicle record to edit by VIN or/and number plates</h1>
-<br>
-
 
 <img src="{% static 'images/record_search_edit.png' %}" height="60px" style="padding-left: 40px; padding-right: 40px;">
 
@@ -29,7 +27,7 @@
 <br />
 
 {% if vehicleFilter.form.is_bound and vehicleFilter.qs %}
-    <h1>Search results:</h1>
+    <h2>Search results:</h2>
     {% for vehicle in vehicleFilter.qs %}  
         
     <div class="report_search">
@@ -53,11 +51,11 @@
 
 {% endif %}
 
+{% endif %}
 
+{% if user.organisation.organisation_type.id == 1 and type == 'customs' %} 
 
 <h1>Search a customs record to edit by vehicle's VIN or/and number plates</h1>
-<br>
-
 
 <img src="{% static 'images/record_search_edit.png' %}" height="60px" style="padding-left: 40px; padding-right: 40px;">
 
@@ -73,7 +71,7 @@
 
 <br />
     {% if vehicleFilter.form.is_bound and vehicleFilter.qs %}
-        <h1>Search results:</h1>
+        <h2>Search results:</h2>
         {% for vehicle in vehicleFilter.qs %}           
                 <div class="report_search">
                     {% if vehicle.customsrecord %}
@@ -103,13 +101,13 @@
 
 {% endif %}
 
-{% if user.organisation.organisation_type.id == 2 %}    
+{% endif %}
 
+
+{% if user.organisation.organisation_type.id == 2 and type == 'ownership' %} 
 
 <h1>Search a ownership record to edit* by vehicle's VIN or/and number plates<br>
-        (*you can edit only last vehicle's ownership record) </h1>
-    <br>
-    
+        (*you can edit only last vehicle's ownership record) </h1>      
     
     <img src="{% static 'images/record_search_edit.png' %}" height="60px" style="padding-left: 40px; padding-right: 40px;">
     
@@ -126,7 +124,7 @@
     <br />
     
     {% if vehicleFilter.form.is_bound and vehicleFilter.qs %}
-    <h1>Search results:</h1>
+    <h2>Search results:</h2>
     {% for vehicle in vehicleFilter.qs %}   
  
     <div class="report_search">
@@ -152,13 +150,14 @@
     {% elif vehicleFilter.form.is_bound %}
         <h2>No results found</h2>      
     
-    {% endif %}       
+    {% endif %}    
+{% endif %}   
+
+{% if user.organisation.organisation_type.id == 2 and type == 'plates' %} 
 
 
 <h1>Search a number plates record to edit* by vehicle's VIN or/and number plates<br>
     (*you can edit only last vehicle's number plate record) </h1>
-<br>
-
 
 <img src="{% static 'images/record_search_edit.png' %}" height="60px" style="padding-left: 40px; padding-right: 40px;">
 
@@ -175,7 +174,7 @@
 <br />
 
 {% if vehicleFilter.form.is_bound and vehicleFilter.qs %}
-<h1>Search results:</h1>
+<h2>Search results:</h2>
 {% for vehicle in vehicleFilter.qs %}
 
 <div class="report_search">
@@ -203,18 +202,18 @@
 
 {% endif %}
 
-{% if user.organisation.organisation_type.id == 6 %} 
+
+
+{% if user.organisation.organisation_type.id == 6 %}
 
 <h1>Search a finance record to edit* by vehicle's VIN or/and number plates<br>
-    (*you can edit only last vehicle's finance record) </h1>
+    (*you can edit only the last vehicle's finance record) </h1>
 <br>
-
 
 <img src="{% static 'images/record_search_edit.png' %}" height="60px" style="padding-left: 40px; padding-right: 40px;">
 
 <form class="input-form" method="POST">
     {% csrf_token %}
-
     {{ vehicleFilter.form.as_p }}
     
     <div class="auth_link">
@@ -225,43 +224,37 @@
 <br />
 
 {% if vehicleFilter.form.is_bound and vehicleFilter.qs %}
-<h1>Search results:</h1>
-{% for vehicle in vehicleFilter.qs %}
-
-<div class="report_search">
-{% if vehicle.financerecord_set.last %}
-    <div class="search-line">
-        
-        <h2><a href="{% url 'FinanceRecord_edit' vehicle.financerecord_set.last.pk  %}">            
-            {% if vehicle.numberplates %}
-                    <div class="plates">{{ vehicle.numberplates }}</div>
-                {% else %}
-                    <div class="no-plates"></div>
-                {% endif %}
-                <div class="search-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
-                <div class="search-vin">VIN: {{ vehicle.VIN }}</div>              
-
-        </a></h2>
-        
-    </div>
-    {% endif %}
-</div>
-
-{% endfor %}
+    <h2>Search results:</h2>
+    {% for vehicle in vehicleFilter.qs %} 
+        {% if vehicle.financerecord_set.last.user_id.organisation == user.organisation %}
+            <div class="report_search">
+                <div class="search-line">
+                    <h2>
+                        <a href="{% url 'FinanceRecord_edit' vehicle.financerecord_set.last.pk %}">
+                            {% if vehicle.numberplates %}
+                                <div class="plates">{{ vehicle.numberplates }}</div>
+                            {% else %}
+                                <div class="no-plates"></div>
+                            {% endif %}
+                            <div class="search-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
+                            <div class="search-vin">VIN: {{ vehicle.VIN }}</div>
+                        </a>
+                    </h2>
+                </div>
+            </div>
+        {% endif %}
+    
+       
+    {% endfor %}  
 {% elif vehicleFilter.form.is_bound %}
-    <h2>No results found</h2>
-
-
-
+    <h2>No results found </h2>
 {% endif %}
-
 {% endif %}
 
 
-{% if user.organisation.organisation_type.id == 3 %} 
+{% if user.organisation.organisation_type.id == 3 and type == 'offence' %} 
 
 <h1>Search an offence record to edit by vehicle's VIN or/and number plates</h1>
-<br>
 
 <img src="{% static 'images/record_search_edit.png' %}" height="60px" style="padding-left: 40px; padding-right: 40px;">
 
@@ -276,7 +269,7 @@
 </form><br>
 
 {% if vehicleFilter.form.is_bound and vehicleFilter.qs %}
-<h1>Search results:</h1>
+<h2>Search results:</h2>
 {% for vehicle in vehicleFilter.qs %}
 
 <div class="report_search">
@@ -301,48 +294,53 @@
 
 {% endif %}
 
-{% if user.organisation.organisation_type.id == 3 or user.organisation.organisation_type.id == 6 %} 
+{% if user.organisation.organisation_type.id == 3 and type == 'accident' or user.organisation.organisation_type.id == 8 %}
+    <h1>Search an accident record to edit by vehicle's VIN or/and number plates</h1><br>
 
-<h1>Search an accident record to edit by vehicle's VIN or/and number plates</h1><br>
+    <img src="{% static 'images/record_search_edit.png' %}" height="60px" style="padding-left: 40px; padding-right: 40px;">
 
-<img src="{% static 'images/record_search_edit.png' %}" height="60px" style="padding-left: 40px; padding-right: 40px;">
+    <form class="input-form" method="POST">
+        {% csrf_token %}
 
-<form class="input-form" method="POST">
-    {% csrf_token %}
+        {{ vehicleFilter.form.as_p }}
 
-    {{ vehicleFilter.form.as_p }}
-    
-    <div class="auth_link">
-        <button type="submit" class="auth-button">SEARCH</button>
-    </div>
-</form><br>
+        <div class="auth_link">
+            <button type="submit" class="auth-button">SEARCH</button>
+        </div>
+    </form><br>
 
-{% if vehicleFilter.form.is_bound and vehicleFilter.qs %}
-<h1>Search results:</h1>
-{% for vehicle in vehicleFilter.qs %}
+    {% if vehicleFilter.form.is_bound and vehicleFilter.qs %}
+        <h2>Search results:</h2>
+        {% for vehicle in vehicleFilter.qs %}
+            <div class="report_search">
+                {% if vehicle.accidentrecord_set %}
+                    {% for record in vehicle.accidentrecord_set.all %}
+                        {% if record.user_id.organisation == user.organisation %}
+                            <div class="search-line">
 
-<div class="report_search">
-{% if vehicle.accidentrecord_set.last %}
-    <div class="search-line">
-        
-        <h2><a href="{% url 'accident_records_to_edit' vehicle.pk %}">            
-            {% if vehicle.numberplates %}
-                    <div class="plates">{{ vehicle.numberplates }}</div>
-                {% else %}
-                    <div class="no-plates"></div>
-            {% endif %}
-                <div class="search-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
-                <div class="search-vin">VIN: {{ vehicle.VIN }}</div></a></h2></div>
+                                <h2>
+                                    <a href="{% url 'accident_records_to_edit' vehicle.pk %}">
+                                        {% if vehicle.numberplates %}
+                                            <div class="plates">{{ vehicle.numberplates }}</div>
+                                        {% else %}
+                                            <div class="no-plates"></div>
+                                        {% endif %}
+                                        <div class="search-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
+                                        <div class="search-vin">VIN: {{ vehicle.VIN }}</div>
+                                    </a>
+                                </h2>
+
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% elif vehicleFilter.form.is_bound %}
+                    <h2>No results found</h2>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endif %}
-</div>
 
-{% endfor %}
-
-{% elif vehicleFilter.form.is_bound %}
-    <h2>No results found</h2>
-{% endif %}
-
-{% endif %}
 
 {% if user.organisation.organisation_type.id == 5 %} 
 
@@ -361,33 +359,38 @@
 </form><br>
 
 {% if vehicleFilter.form.is_bound and vehicleFilter.qs %}
-<h1>Search results:</h1>
+<h2>Search results:</h2>
 {% for vehicle in vehicleFilter.qs %}
 
 <div class="report_search">
-{% if vehicle.maintenancerecord_set.last %}
-    <div class="search-line">
-        
-        <h2><a href="{% url 'maintenance_records_to_edit' vehicle.pk %}">            
-            {% if vehicle.numberplates %}
-                    <div class="plates">{{ vehicle.numberplates }}</div>
-                {% else %}
-                    <div class="no-plates"></div>
-            {% endif %}
-                <div class="search-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
-                <div class="search-vin">VIN: {{ vehicle.VIN }}</div></a></h2></div>
+    {% if vehicle.maintenancerecord_set %}
+    {% for record in vehicle.maintenancerecord_set.all %}
+        {% if record.user_id.organisation == user.organisation %}
+                {% if forloop.counter == 1 %}
+                   <div class="search-line">
+                <h2>
+                    <a href="{% url 'maintenance_records_to_edit' vehicle.pk %}">
+                        {% if vehicle.numberplates %}
+                            <div class="plates">{{ vehicle.numberplates }}</div>
+                        {% else %}
+                            <div class="no-plates"></div>
+                        {% endif %}
+                        <div class="search-make-model">{{ vehicle.brand.brand }} {{ vehicle.model }}</div>
+                        <div class="search-vin">VIN: {{ vehicle.VIN }}</div>
+                    </a>
+                </h2>
+            </div>
+             {% endif %}
+        {% endif %}
+    {% endfor %}
+    {% endif %}
+{% endfor %}
+{% elif vehicleFilter.form.is_bound %}
+<h2>No results found</h2>
 {% endif %}
 </div>
 
-{% endfor %}
-
-{% elif vehicleFilter.form.is_bound %}
-    <h2>No results found</h2>
 {% endif %}
 
-{% endif %}
-
-
-{% endif %}
 {% endblock content %}
     

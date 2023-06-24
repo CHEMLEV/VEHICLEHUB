@@ -53,3 +53,15 @@ class VehicleFilter(django_filters.FilterSet):
     class Meta:
         model = Vehicle
         fields = ['numberplates', 'vin']
+
+
+from django import template
+
+register = template.Library()
+
+@register.filter
+def break_loop(value, condition):
+    for item in value:
+        if condition(item):
+            break
+    return item

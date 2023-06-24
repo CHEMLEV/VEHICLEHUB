@@ -161,11 +161,19 @@
                       <td>{{ record.record_date|date:"d-m-Y" }}</td>
                       <td>{{ record.mileage }} km</td>
                       <td>{{ record.comment }}</td>
-                      <td>{% if record.other_participants %}{% if user.organisation.organisation_type.id == 3 %}{{ record.other_participants }}{% else %}Yes{% endif %}{% else %}No{% endif %}</td>
+                      <td>{% if record.other_participants %}
+                              {% if user.organisation.organisation_type.id == 3 %}
+                                      {{ record.other_participants }}
+                              {% else %}
+                                Yes
+                              {% endif %}
+                          {% else %}
+                                No
+                          {% endif %}</td>
                   </tr>
                   {% empty %}
                   <tr>
-                      <td colspan="4">No reported accidents.</td>
+                      <td colspan="5">No reported accidents</td>
                   </tr>
                   {% endfor %}
               </tbody>
@@ -181,7 +189,11 @@
             <col style="width: 4%;">
             <col style="width: 8%;">
             <col style="width: 8%;">
+            {% if user.organisation.organisation_type.id != 3 %}
+            <col style="width: 80%;">
+            {% else %}
             <col style="width: 40%;">
+            {% endif %}
             <col style="width: 40%;">
             
         </colgroup>

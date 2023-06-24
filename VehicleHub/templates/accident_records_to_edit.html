@@ -45,6 +45,7 @@
         </thead>
         <tbody>
             {% for record in vehicle.accidentrecord_set.all %}
+                  {% if record.user_id.organisation == user.organisation %}
             <tr {% if forloop.counter|divisibleby:2 %}class="maroon-row"{% else %}class="blue-row"{% endif %} onclick="location.href='{% url 'AccidentRecord_edit' record.pk %}'" style="cursor: pointer;">
                 <td>{{ forloop.counter }}</td>
                 <td>{{ record.record_date|date:"d-m-Y" }}</td>
@@ -53,6 +54,7 @@
                 <td>{% if record.other_participants %}{% if user.organisation.organisation_type.id == 3 %}{{ record.other_participants }}{% else %}Yes{% endif %}{% else %}No{% endif %}</td>
             </tr>
             
+                    {% endif %} 
             {% endfor %}
         </tbody>
     </table>

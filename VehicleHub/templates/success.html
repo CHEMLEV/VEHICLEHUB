@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<center><div class="success_message">
+  <h1>RECORD UPDATED SUCCESSFULLY</h1>
+  <div>
+    <h3>You're being redirected to your home page</h3></center>
+  
+    <script>
+      setTimeout(function() {
+        window.location.href = "{{ 'ui' }}";
+      }, 5000);
+    </script>
+  {% endblock %}
