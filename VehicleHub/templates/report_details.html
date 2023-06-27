@@ -31,11 +31,12 @@
       General information: 
       </h1>
       
-      <h3>
-       Year: {{vehicle.year}}
-       <br>       
+      <h3>             
+      <br>
        VIN: {{vehicle.VIN}}
       <br>
+      Year: {{vehicle.year}}
+       <br>   
        {% if vehicle.fuel != null %}
        Fuel: {{vehicle.fuel}}
        <br>
@@ -52,7 +53,21 @@
        Trim line: {{vehicle.trim_line}}
        <br>
        {% endif %}
-</h3>
+       <br>
+       Safety rating: {{vehicle.rating.rating}}
+       {% if vehicle.rating.rating == 1 %}
+        <img src="{% static 'images/1star.png' %}" alt="1star" width="75" height="15" >
+        {% elif vehicle.rating.rating == 2 %}
+        <img src="{% static 'images/2stars.png' %}" alt="2stars" width="75" height="15" >
+        {% elif vehicle.rating.rating == 3 %}
+        <img src="{% static 'images/3stars.png' %}" alt="3stars" width="75" height="15" >
+        {% elif vehicle.rating.rating == 4 %}
+        <img src="{% static 'images/4stars.png' %}" alt="4stars" width="75" height="15" >
+        {% elif vehicle.rating.rating == 5 %}
+        <img src="{% static 'images/5stars.png' %}" alt="5stars" width="75" height="15" >          
+        {% endif %}
+       <br>
+      </h3>
   </div><br>
 
 
@@ -201,7 +216,7 @@
                 <tr>
                   <th><h2>#</h2></th>
                   <th><h2>Date</h2></th>
-                  <th><h2>Offence</h2></th>
+                  <th><h2>Type</h2></th>
                   <th><h2>Details</h2></th>
                     {% if user.organisation.organisation_type.id == 3 %}
                   <th><h2>Punishment</h2></th>

@@ -184,7 +184,7 @@ class SearchEditDetailsView(DetailView):
 
 class VehicleUpdateView(UpdateView):
     model = Vehicle
-    fields = ['year', 'brand', 'model', 'fuel', 'output', 'drivetrain', 'trim_line', 'registered_owner_user_id']
+    fields = ['year', 'brand', 'model', 'rating', 'fuel', 'output', 'drivetrain', 'trim_line', 'registered_owner_user_id']
     template_name = "record_edit.html"
     
 
@@ -210,7 +210,8 @@ class VehicleUpdateView(UpdateView):
     
 
 
-class CustomsRecordUpdateView(UpdateView):  
+class CustomsRecordUpdateView(UpdateView): 
+
     model = CustomsRecord
     fields = ['record_date', 'mileage', 'import_as', 'damaged', 'country_of_origin']
     template_name = "record_edit.html"
@@ -239,8 +240,10 @@ class OwnershipUpdateView(UpdateView):
         context['my_model'] = "ownership"
         context['VIN'] = self.object.vehicle_id.VIN
         return context
+    
+
     def get_success_url(self):
-        return reverse_lazy('ui')
+        return reverse_lazy('success')
 
     def test_func(self):
         obj = self.get_object()
@@ -400,6 +403,9 @@ class OwnershipCreateView(LoginRequiredMixin, CreateView):  # new
     def form_valid(self, form):
         form.instance.user_id = self.request.user
         return super().form_valid(form)
+    
+    def get_success_url(self):        
+        return reverse_lazy('success_create')
 
 
 class NumberPlateCreateView(LoginRequiredMixin, CreateView):  # new 
@@ -421,6 +427,9 @@ class NumberPlateCreateView(LoginRequiredMixin, CreateView):  # new
     def form_valid(self, form):
         form.instance.user_id = self.request.user
         return super().form_valid(form)
+    
+    def get_success_url(self):        
+        return reverse_lazy('success_create')
 
 
 class FinanceRecordCreateView(LoginRequiredMixin, CreateView):  # new 
@@ -442,6 +451,9 @@ class FinanceRecordCreateView(LoginRequiredMixin, CreateView):  # new
     def form_valid(self, form):
         form.instance.user_id = self.request.user
         return super().form_valid(form)
+    
+    def get_success_url(self):        
+        return reverse_lazy('success_create')
 
 
 class AccidentRecordCreateView(LoginRequiredMixin, CreateView):  # new 
@@ -463,6 +475,9 @@ class AccidentRecordCreateView(LoginRequiredMixin, CreateView):  # new
     def form_valid(self, form):
         form.instance.user_id = self.request.user
         return super().form_valid(form)
+    
+    def get_success_url(self):        
+        return reverse_lazy('success_create')
 
 
 class PoliceRecordCreateView(LoginRequiredMixin, CreateView): 
@@ -485,6 +500,9 @@ class PoliceRecordCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.user_id = self.request.user
         return super().form_valid(form)
+    
+    def get_success_url(self):        
+        return reverse_lazy('success_create')
 
 
 class MaintenanceRecordCreateView(LoginRequiredMixin, CreateView):  # new 
@@ -502,21 +520,21 @@ class MaintenanceRecordCreateView(LoginRequiredMixin, CreateView):  # new
         form = super().get_form(form_class)
         form.fields.pop('user_id')
         return form
+    
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['products_used'].required = False
+        return form
 
     def form_valid(self, form):
         form.instance.user_id = self.request.user
         return super().form_valid(form)
 
 
-class VehicleDeleteView(DeleteView): #LoginRequiredMixin, UserPassesTestMixin, 
-    model = Vehicle
-    fields = (
-        "VIN",
-        "year",
-    )
-    template_name = "vehicle_delete.html"
-    success_url = reverse_lazy('manage_records')
-
-    def test_func(self):  # new
+    def test_func(self):
         obj = self.get_object()
         return obj.developer == self.request.user
+    
+    def get_success_url(self):        
+        return reverse_lazy('success_create')

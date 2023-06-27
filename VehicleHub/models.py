@@ -34,13 +34,20 @@ class VehicleMake(models.Model):
 
     def __str__(self):
         return self.brand
+    
+class SafetyRating(models.Model):
+    rating = models.IntegerField(null=False)
+
+    def __str__(self):
+        return  str(self.rating)
 
 
 class Vehicle(models.Model):
-    VIN = models.TextField(max_length=20, null=False)
+    VIN = models.TextField(max_length=20, null=False, unique=True)
     year = models.IntegerField(null=False)
     brand = models.ForeignKey(VehicleMake, on_delete=models.CASCADE)
     model = models.TextField(max_length=20, null=False)
+    rating = models.ForeignKey(SafetyRating, on_delete=models.CASCADE)
     fuel = models.TextField(max_length=20, null=False)
     output = models.IntegerField(null=False)
     drivetrain = models.TextField(max_length=20, null=False)
@@ -82,7 +89,7 @@ class NumberPlate(models.Model):
     user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=False)
     record_date = models.DateField(default=datetime.now, null=False)
     mileage = models.IntegerField(null=False)
-    new_plates = models.TextField(max_length=30, null=False)
+    new_plates = models.TextField(max_length=30, null=False, unique=True)
 
     def __str__(self):
         return str(self.new_plates)
@@ -153,7 +160,7 @@ class MaintenanceRecord(models.Model):
     record_date = models.DateField(default=datetime.now, null=False)
     mileage = models.IntegerField(null=False)
     comment = models.TextField(max_length=500)
-    products_used = models.TextField(max_length=500)
+    products_used = models.TextField(max_length=500, null=True)
    
 
     def __str__(self):

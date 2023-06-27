@@ -42,7 +42,6 @@
             {% endif %}
             {% if user.organisation_id > 0 %}
             Your access level: {{user.organisation.organisation_type.organisation_type}}
-            {{user.organisation.organisation_type.id}}
             {% endif %}<br><br>
             <div class="auth_link">
             <a href="#" onclick="logout()" >LOG OUT</a>

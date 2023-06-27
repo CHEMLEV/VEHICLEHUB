@@ -134,7 +134,8 @@ body {
   border-radius: 5px;
   font-size: 30px;
   font-weight: bold;
-  width: 100px;
+  width: 120px;
+  text-align: center;
 }
 
 .no-plates {
@@ -241,6 +242,7 @@ body {
   width: 120px !important;
   text-align: center;
   padding-left: 10px;
+  padding-right: 10px;
 }
 
 .search-logo {
@@ -260,7 +262,7 @@ body {
 .search-make-model{
   display: inline-block;
   vertical-align: middle;
-  width: 200px;
+  width: 260px;
   margin-left: 30px;
 }
 
@@ -333,9 +335,9 @@ body {
   }
 
   .success_message {
-    border: 4px solid green;    
-    padding: 10px;
-    border-radius: 5px;
+    border: 7px solid green;    
+    padding: 20px;
+    border-radius: 10px;
     display: inline-block;
   }
 
