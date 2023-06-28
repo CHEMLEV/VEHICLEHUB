@@ -109,13 +109,13 @@ class FinanceRecord(models.Model):
 
 
 class BreachType(models.Model):
-    breach_type_title = models.TextField(max_length=500, null=False)
+    breach_type_title = models.TextField(max_length=100, null=False)
 
     def __str__(self):
         return self.breach_type_title
 
 class PunishmentType(models.Model):
-    punishment_type_title = models.TextField(max_length=500, null=False)
+    punishment_type_title = models.TextField(max_length=100, null=False)
 
     def __str__(self):
         return self.punishment_type_title
