@@ -4,6 +4,6 @@ VehicleHubWebsite/__pycache__/
 VehicleHub/migrations/0003_accidentrecord_breachtype_customrecord_financerecord_maintenancetype_numberplate_ownership_policerec.py
 VehicleHub/migrations/0004_auto_20230531_1337.py
 
-
+db.sqlite3
 VehicleHub/.DS_Store
 .DS_Store

@@ -12,8 +12,18 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
 
+<div class="explanation">
+    
+    Whether you're a passionate car enthusiast, a service technician, a government agency employee, or simply someone looking to buy a reliable vehicle, our website provides a comprehensive range of features to cater to all your needs.<br> <br>
+    We empower our users to actively participate in enhancing the accuracy and completeness of vehicle information. We understand that vehicle details may evolve over time, and we provide easy-to-use tools for adding and editing vehicle information. Our search tools help you to find all necessary vehicle information with ease.<br> <br>
+    VehicleHub is committed to creating a trusted and transparent environment for all users. We prioritize the security and facilitate safe transactions through our platform.<br><br> 
+    Happy browsing and happy motoring!<br> <br>
+    The VehicleHub Team
+    </div>
+    
+<center style="margin-top: 50px"> <img src="{% static 'images/logo1.jpg' %}" alt="logo-image" height="120" ><br><br><center>
 
-<center style="margin-top: 100px"> <img src="{% static 'images/logo1.jpg' %}" alt="logo-image" height="120" ><br><br><center>
+  
 
   <form class="input-form" style="margin-top: 20px; width: 300px;" action="{% url 'login' %}" method="post">
     {% csrf_token %}
@@ -35,7 +45,6 @@
   
 
 <p style="color: black;">Don't have an account? Create one <a href="{% url 'register' %}" style="color: black;">here</a></p> </center>
-
 
 </html>
 
